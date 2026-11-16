@@ -63,6 +63,10 @@ body{background:var(--black);color:var(--chalk)}
 .chalk-band .textlinks{margin-top:30px;gap:26px}
 .chalk-band .textlinks a{color:#4a453c}
 .chalk-band .textlinks a:hover{color:var(--black)}
+/* Google reviews line under the booking button: small, gold stars + quiet text */
+.chalk-band .reviews{display:flex;flex-direction:column;align-items:center;gap:6px;margin:28px auto 0;width:max-content;max-width:100%;text-decoration:none;color:#4a453c;font:500 12px/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase}
+.chalk-band .reviews .stars{color:#b8901f;font-size:17px;letter-spacing:.22em;line-height:1}
+.chalk-band .reviews:hover span:last-child{color:var(--black);text-decoration:underline;text-underline-offset:4px}
 .contact-block.chalk-band .lead{font-family:var(--sans)}
 
 @media (max-width:860px){
