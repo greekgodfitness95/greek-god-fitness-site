@@ -68,6 +68,7 @@ Use the artifact database tools (`db_write`) on the Olympus HQ artifact:
 ## SEO (Odysseus)
 Goal from Oliver: top 3 on Google for Limassol personal training; the brand is premium/luxury.
 - Done 16 Nov 2026: keyword page titles ("… Personal Trainer in Limassol"), canonical + Open Graph tags, schema.org `HealthClub`/`LocalBusiness` JSON-LD on the homepage and `Service` on the other pages, `sitemap.xml`, `robots.txt`, hidden homepage `<h1>` mentions Limassol.
+- Per-page SEO (16 Nov): Personal Training + Nutrition pages have keyword descriptions and an FAQ section (`css/faq.css`, facts only from existing page copy – never invent prices/hours/claims); descriptive image alt texts on all pages.
 - Keep the homepage meta description saying "Germasogeia, Cyprus" (Oliver's choice). Visible headings stay as designed.
 - WhatsApp links in `js/config.js` pre-fill "Hi Oliver, I found Greek God Fitness on your website…" so enquiries from the site are recognisable. Andre's `dietWhatsapp` is left alone.
 - Next (needs Oliver's Google account): Google Business Profile, Google Search Console (submit the sitemap), collect Google reviews. Opening hours are not known yet – add them to the schema when Oliver gives them.

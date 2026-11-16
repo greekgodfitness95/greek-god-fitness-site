@@ -1,0 +1,13 @@
+/* FAQ sections on Personal Training + Nutrition (SEO content). Matches the black/chalk/gold look. Remove this file and its <link> to undo. */
+.faq{max-width:860px;margin:0 auto;padding:70px 22px 10px}
+.faq h2{font:400 clamp(26px,2.8vw,38px)/1.2 var(--serif);letter-spacing:.1em;text-transform:uppercase;text-align:center;color:var(--gold);margin-bottom:12px}
+.faq .intro{text-align:center;color:var(--chalk-dim,#bfb8ab);font:400 clamp(17px,1.6vw,20px)/1.5 var(--serif);letter-spacing:.04em;margin:0 auto 34px;max-width:640px}
+.faq details{border-top:1px solid rgba(201,165,74,.35);padding:4px 0}
+.faq details:last-of-type{border-bottom:1px solid rgba(201,165,74,.35)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:18px;padding:18px 2px;font:600 16px/1.4 var(--sans);letter-spacing:.02em;color:var(--chalk,#ece6da)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";flex:none;font:300 26px/1 var(--sans);color:var(--gold)}
+.faq details[open] summary::after{content:"–"}
+.faq summary:hover{color:var(--gold)}
+.faq details p{text-align:left;padding:0 2px 20px;font-size:16px;line-height:1.7;color:#d9d4ca}
+.faq details p a{color:var(--gold)}
