@@ -48,6 +48,7 @@ Claude is **Zeus** and hands out the work. Do each job "as" the agent whose role
 | Hermes | `hermes` | **God of Speed** – Speed Guardian (keeps pages fast on phones, shrinks heavy images/video) and messenger: carries Zeus's orders to the agents. God (kind `god`, look `hermes`), lives at the Temple of Hermes |
 | Argos | `argos` | Watchman – checks the site is up, no errors, warns if a deploy broke it |
 | Homeros | `homeros` | Copywriter – page wording, offers and calls to action |
+| Pythagoras | `pythagoras` | Analyst – reads visitor numbers (pages, phone vs computer, where people come from, where they drop off) and suggests what to change. Uses Vercel Web Analytics |
 
 New agents: Spartans by default; a bigger role can be promoted to a god (`kind: "god"`) or a new god created.
 
@@ -57,3 +58,8 @@ Use the artifact database tools (`db_write`) on the Olympus HQ artifact:
 - Add an `events/<unique-id>` doc for each task, push, deploy and new project: `{ type: "task"|"push"|"deploy"|"project"|"note", agent, project, text, at: <ms timestamp> }`.
 - Projects live in `projects/<id>` (the website is `ggf-site`). A new project gets a new temple.
 - **Security threats:** when Leonidas finds something unsafe (exposed key, broken/unsafe form or link, vulnerable code), log `{ type: "threat", agent: "leonidas", project, text }`. Leonidas calls every Spartan into a phalanx in front of the Pantheon. When it's fixed, log `{ type: "secured", agent: "leonidas", project, text }` and they stand down.
+
+## Analytics (Pythagoras) – prepared, NOT switched on
+- Branch `analytics-ready` adds the Vercel Web Analytics script to all three pages. It is not merged into `main`.
+- To switch on (only when Oliver says so): enable Web Analytics for the project in the Vercel dashboard (Project → Analytics → Enable), confirm the script path it shows, merge `analytics-ready` into `main`, push, then deploy.
+- Cost: free on Vercel's Hobby plan up to 50,000 events (page views) a month; beyond that collection pauses rather than charging. Ask Oliver before upgrading or adding any paid analytics.
