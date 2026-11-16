@@ -360,7 +360,14 @@ function useMouseScrubVideo(
         .then((r) => { if (r === "granted") window.addEventListener("deviceorientation", onTilt); })
         .catch(() => {});
     };
-    const onTouchEnd = () => askTilt();
+    // Only ask on a tap on the Spartan himself. Asking on a tap on a link or button made iOS show
+    // its motion-permission prompt mid-tap, which swallowed the navigation (menu/hero links didn't open).
+    const onTouchEnd = (e: TouchEvent) => {
+      const t = e.target as Element | null;
+      if (!t || !t.closest || t.closest("a, button, input, select, textarea, summary, label")) return;
+      if (!t.closest("#hero-stage")) return;
+      askTilt();
+    };
     const onSeeked = () => {
       seeking = false;
       if (pendingFade && canvas) {
