@@ -1,6 +1,6 @@
 # Greek God Fitness website – notes for Claude
 
-Owner: Oliver Elia (greekgodfitness.org). Static HTML/CSS/JS, hosted on Vercel; every push to `main` goes live automatically.
+Owner: Oliver Elia (greekgodfitness.org). Static HTML/CSS/JS, hosted on Vercel. Pushes to `main` build a staged production deployment but do **not** go live on their own (Vercel setting "auto-assign custom production domains" is off); going live is a separate **deploy** step.
 
 ## How Oliver wants work done
 - Test thoroughly before showing anything; only report back when it is 95%+ of what was asked.
@@ -26,7 +26,9 @@ Owner: Oliver Elia (greekgodfitness.org). Static HTML/CSS/JS, hosted on Vercel; 
 - Known issue: the head still glitches somewhat when moving; Oliver wants to improve it later.
 
 ## Words Oliver uses
-- **"push"** = commit, push to `main` and let it go live straight away (no separate confirmation needed). After pushing, check the Vercel deploy finished (Vercel connector, team `greek-god-fitness`, project `greek-god-fitness-site`).
+- **"push"** = commit and push to `main`. Vercel builds it (state READY) but greekgodfitness.org does **not** change yet. Give Oliver the build's preview URL if useful.
+- **"deploy"** = make it live: promote the latest READY production deployment of `main` to greekgodfitness.org (Vercel connector `request_promote`, team `greek-god-fitness`, project `greek-god-fitness-site`), then confirm the domain serves it. If there are unpushed changes, push first.
+- Log both to Olympus HQ (Dienekes): a `push` event on push, a `deploy` event when it goes live.
 
 ## The agent team (Olympus HQ)
 Olympus HQ is a private 3D world showing who is working on what: https://claude.ai/artifact/YHbUtPccTBfy5JmmEFrpnk
