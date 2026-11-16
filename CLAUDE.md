@@ -35,11 +35,12 @@ Claude is **Zeus** and hands out the work. Do each job "as" the agent whose role
 | Agent | id | Role |
 |---|---|---|
 | Zeus | `zeus` | Claude – takes Oliver's requests, gives orders |
-| Leonidas | `leonidas` | Builder – edits the site code |
+| Leonidas | `leonidas` | **Security Guard**, King of the Spartans – checks contact links, forms and code for anything unsafe or exposed. Hero (kind `hero`, look `king`) |
+| Daedalus | `daedalus` | Master Builder – edits the site code |
 | Dienekes | `dienekes` | Deployer – pushes to `main`, checks Vercel, rolls back if broken |
 | Ariston | `ariston` | Scout – researches other websites for ideas |
 | Kallias | `kallias` | Tester – checks desktop + phone, speed and errors before going live |
-| Odysseus | `odysseus` | Search (SEO) – gets the site found on Google, e.g. "personal trainer Limassol". Drawn as a hero (kind `hero`), not a Spartan |
+| Odysseus | `odysseus` | Search (SEO) – gets the site found on Google, e.g. "personal trainer Limassol". Hero (kind `hero`, look `wanderer`) |
 | Pheidippides | `pheidippides` | Speed Guardian – keeps pages fast on phones, shrinks heavy images/video |
 | Argos | `argos` | Watchman – checks the site is up, no errors, warns if a deploy broke it |
 | Homeros | `homeros` | Copywriter – page wording, offers and calls to action |
@@ -51,3 +52,4 @@ Use the artifact database tools (`db_write`) on the Olympus HQ artifact:
 - When an agent starts a task: update `agents/<id>` with `status: "working"`, `project`, `task`; set back to `status: "idle"`, `task: ""` when done.
 - Add an `events/<unique-id>` doc for each task, push, deploy and new project: `{ type: "task"|"push"|"deploy"|"project"|"note", agent, project, text, at: <ms timestamp> }`.
 - Projects live in `projects/<id>` (the website is `ggf-site`). A new project gets a new temple.
+- **Security threats:** when Leonidas finds something unsafe (exposed key, broken/unsafe form or link, vulnerable code), log `{ type: "threat", agent: "leonidas", project, text }`. Leonidas calls every Spartan into a phalanx in front of the Pantheon. When it's fixed, log `{ type: "secured", agent: "leonidas", project, text }` and they stand down.
