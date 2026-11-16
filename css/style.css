@@ -147,3 +147,60 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-l
   .map{height:320px}
 }
 @media (min-width:861px){ .nav .brand{display:none} }
+
+/* ---------- Molten-gold headings ---------- */
+.coach-photo h2,
+.studio h2,
+.location h2,
+.page-title,
+.nutri h1,
+.nutri h2,
+.hero-links a {
+  /* layer 1: a soft bright band that drifts across; layer 2: metallic gold body */
+  background-image:
+    linear-gradient(110deg, transparent 42%, rgba(255, 244, 205, .95) 50%, transparent 58%),
+    linear-gradient(180deg, #f3d683 0%, #d4b056 45%, #b48a34 78%, #8f6b24 100%);
+  background-size: 320% 100%, 100% 100%;
+  background-position: 100% 0, 0 0;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 10px rgba(201, 165, 74, .16));
+  transition: filter .45s ease;
+  animation: ggf-shimmer 8s ease-in-out infinite;
+}
+/* headings sit inline-block-ish so the shine travels the text, not the full row */
+.studio h2, .location h2, .page-title, .nutri h1, .nutri h2 { display: block; }
+
+@keyframes ggf-shimmer {
+  0%   { background-position: 100% 0, 0 0; }
+  38%  { background-position: 0% 0, 0 0; }
+  100% { background-position: 0% 0, 0 0; }
+}
+
+/* hover: the metal heats up */
+.coach-photo h2:hover,
+.studio h2:hover,
+.location h2:hover,
+.page-title:hover,
+.nutri h1:hover,
+.nutri h2:hover,
+.hero-links a:hover,
+.coach-photo:hover h2 {
+  filter: brightness(1.22) drop-shadow(0 0 14px rgba(245, 197, 24, .42)) drop-shadow(0 0 2px rgba(255, 220, 140, .55));
+}
+
+/* home page links keep their underline in matching gold */
+.hero-links a { text-decoration-color: rgba(201, 165, 74, .8); }
+.hero-links a:hover { text-decoration-color: #e6c673; }
+
+/* the coach caption sits on a photo, so give it a little extra lift */
+.coach-photo h2 { filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .7)) drop-shadow(0 0 10px rgba(201, 165, 74, .2)); }
+.coach-photo:hover h2 { filter: brightness(1.22) drop-shadow(0 2px 6px rgba(0, 0, 0, .7)) drop-shadow(0 0 14px rgba(245, 197, 24, .45)); }
+
+/* ---------- Reduced motion: keep the gold, drop the shine movement ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .coach-photo h2, .studio h2, .location h2, .page-title, .nutri h1, .nutri h2, .hero-links a { animation: none !important; background-position: 100% 0, 0 0; }
+}
