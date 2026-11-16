@@ -44,7 +44,7 @@ Claude is **Zeus** and hands out the work. Do each job "as" the agent whose role
 | Ariston | `ariston` | Scout – researches other websites for ideas |
 | Kallias | `kallias` | Tester – checks desktop + phone, speed and errors before going live |
 | Odysseus | `odysseus` | Search (SEO) – gets the site found on Google, e.g. "personal trainer Limassol". Hero (kind `hero`, look `wanderer`) |
-| Pheidippides | `pheidippides` | Speed Guardian – keeps pages fast on phones, shrinks heavy images/video |
+| Hermes | `hermes` | **God of Speed** – Speed Guardian (keeps pages fast on phones, shrinks heavy images/video) and messenger: carries Zeus's orders to the agents. God (kind `god`, look `hermes`), lives at the Temple of Hermes |
 | Argos | `argos` | Watchman – checks the site is up, no errors, warns if a deploy broke it |
 | Homeros | `homeros` | Copywriter – page wording, offers and calls to action |
 
