@@ -11,6 +11,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/style.css">
+<style>
+  /* Hero: live Spartan + four-layer embers */
+  .hero-stage{position:relative;overflow:hidden;isolation:isolate}
+  .hero-stage #hero-root{position:absolute;inset:0}
+  .hero-stage #hero-root [style*="z-index: 5"]{display:none!important} /* heading is redrawn in front of the embers */
+  .hero-stage #smoke,.hero-stage #embers{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+  .hero-heading{position:absolute;left:0;right:0;bottom:9%;text-align:center;pointer-events:none;font-weight:700;letter-spacing:.12em;font-size:clamp(20px,3.0556vw,44px);color:#e8b923;text-shadow:0 2px 12px rgba(0,0,0,.8)}
+</style>
 </head><body>
 <header class="nav" id="nav">
   <div class="nav-inner">
@@ -32,7 +40,13 @@
 <main>
 <section class="hero" id="home">
   <h1 class="sr-only">Greek God Fitness – Unleash your inner god</h1>
-  <div class="hero-video" id="hero-root"></div>
+  <div class="hero-video hero-stage" id="hero-stage">
+    <div id="hero-root"></div>
+    <canvas id="smoke"></canvas>
+    <canvas id="embers"></canvas>
+    <div class="hero-heading">UNLEASH YOUR INNER GOD</div>
+    <button id="toggle" type="button" hidden>Embers: on</button>
+  </div>
   <div class="hero-links">
     <a href="/personal-training">Personal Training</a>
     <span class="sep" aria-hidden="true"></span>
@@ -100,5 +114,6 @@
 <script src="/js/config.js"></script>
 <script src="/js/site.js"></script>
 <script src="/js/hero.js" defer></script>
+<script src="/js/embers.js" defer></script>
 </body>
 </html>
