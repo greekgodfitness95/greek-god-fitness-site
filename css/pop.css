@@ -1,0 +1,73 @@
+/* =========================================================
+   Colour system: "two quiet colours + one loud" (deep black + warm chalk, gold as the accent)
+   Sits on top of style.css; remove this file (and its <link>) to undo.
+   ========================================================= */
+:root{
+  --black:#050505;
+  --chalk:#ece6da;          /* warm off-white for text and the light band */
+  --chalk-dim:#bfb8ab;
+  --loud:#f5c518;           /* bright gold, saved for the things people should press */
+  --bg-dark:var(--black); --bg-section:var(--black); --bg-page:var(--black);
+  --text:var(--chalk);
+}
+body{background:var(--black);color:var(--chalk)}
+
+/* 1. True black everywhere (no grey sections) */
+.hero,.coach,.studio,.location,.footer,.page-top{background:var(--black)}
+.nav{background:rgba(5,5,5,.86)}
+
+/* 2. Warm chalk text instead of grey */
+.coach-text p,.connect,.pt-split p,.copy p,.consult p,.addr,.footer p,.nutri .tag{color:var(--chalk)}
+.footer p,.nutri .tag{color:var(--chalk-dim)}
+
+/* 3. Gold used sparingly: small details go chalk, gold lights up only on hover */
+.coach-photo .cap p,.coach-text .quote,.pt-split .first,.consult .cm,.back a{color:var(--chalk)}
+.icons a{border-color:rgba(236,230,218,.35);color:var(--chalk)}
+.icons a:hover{border-color:var(--gold);color:var(--gold);background:none}
+.addr .i{color:var(--chalk)}
+.textlinks a{color:var(--chalk-dim)}
+.textlinks a:hover{color:var(--chalk)}
+.pt-split .free{color:var(--loud)}
+
+/* 4. The loud gold button: the one thing your eye goes to */
+.btn,.btn-loud,.textlinks a.btn-loud{
+  display:inline-block;background:var(--loud);color:#0a0a0a;
+  font:800 13px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;text-decoration:none;
+  padding:19px 44px;border-radius:3px;margin-top:28px;
+  box-shadow:0 0 0 1px rgba(0,0,0,.06),0 10px 30px rgba(245,197,24,.18);
+  transition:transform .2s ease,box-shadow .2s ease,background .2s ease;
+}
+.btn:hover,.btn-loud:hover,.textlinks a.btn-loud:hover{background:#ffd23a;color:#0a0a0a;transform:translateY(-2px);box-shadow:0 14px 36px rgba(245,197,24,.32)}
+.textlinks{align-items:center}
+.textlinks a.btn-loud{margin-top:0}
+
+/* 5. Photos stay in full colour */
+.gallery img{transition:transform .5s ease}
+.gallery img:hover{transform:scale(1.02)}
+
+/* 6. Big bold statement lines (sportswear style) */
+.big{
+  font:400 clamp(54px,9vw,132px)/.92 "Anton","Impact","Haettenschweiler","Arial Narrow Bold","Arial Black",sans-serif;
+  text-transform:uppercase;letter-spacing:.01em;color:var(--black);margin:6px 0 0;
+}
+.big span{color:var(--loud);-webkit-text-stroke:0}
+.big-dark{color:var(--chalk);font-size:clamp(40px,6.4vw,92px);margin-top:18px}
+
+/* 7. One light chalk band to break up the black */
+.chalk-band{background:var(--chalk);color:var(--black);text-align:center;padding:84px 24px 92px}
+.chalk-band .kicker{font:700 11px/1 var(--sans);letter-spacing:.28em;text-transform:uppercase;color:#6d665b}
+.chalk-band .big span{color:var(--black);background:var(--loud);padding:0 .12em;margin-left:.04em;display:inline-block;line-height:1;transform:translateY(-.02em)}
+.chalk-band .sub,.chalk-band .lead{font:400 17px/1.55 var(--sans);color:#3b372f;max-width:560px;margin:22px auto 0;letter-spacing:0}
+.chalk-band .btn-loud{background:var(--black);color:var(--loud);box-shadow:0 12px 30px rgba(0,0,0,.18)}
+.chalk-band .btn-loud:hover{background:#151515;color:#ffd23a}
+.chalk-band .textlinks{margin-top:30px;gap:26px}
+.chalk-band .textlinks a{color:#4a453c}
+.chalk-band .textlinks a:hover{color:var(--black)}
+.contact-block.chalk-band .lead{font-family:var(--sans)}
+
+@media (max-width:860px){
+  .chalk-band{padding:64px 20px 70px}
+  .btn,.btn-loud{padding:18px 34px}
+}
+@media (prefers-reduced-motion:reduce){ .btn,.btn-loud,.gallery img{transition:none} .gallery img:hover{transform:none} }
+@media (max-width:500px){ .chalk-band .kicker{font-size:10px;letter-spacing:.16em} }
