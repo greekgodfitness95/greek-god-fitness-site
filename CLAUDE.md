@@ -25,6 +25,7 @@ Owner: Oliver Elia (greekgodfitness.org). Static HTML/CSS/JS, hosted on Vercel. 
 - Phone (`pointer: coarse`): `PHONE_TILT_ONLY = true` in `src/GGFSpartan.tsx` – he always looks down; left/right tilt picks lower-left / down / lower-right; no finger steering, no idle look-around; starts on frame 114.
 - iOS motion permission is requested only when the visitor taps the Spartan (inside `#hero-stage`, not on a link/button). Asking on any tap made iPhones show the prompt mid-tap and swallowed menu/hero link taps (fixed 16 Nov).
 - Build with the same React the bundle uses (19.2.8): `npm install --no-save react@19.2.8 react-dom@19.2.8 esbuild@0.28`, then the esbuild command above.
+- Phone menu (`css/style.css`, max-width media block): the Services links are always shown while the menu is open. A desktop hover rule used to collapse them under the finger, so Personal Training landed on Contact and Nutrition on nothing (fixed 16 Nov). Test phone menus with a hover-then-tap, not by tapping Services first.
 - Known issue: the head still glitches somewhat when moving; Oliver wants to improve it later.
 
 ## Words Oliver uses

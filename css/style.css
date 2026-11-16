@@ -130,8 +130,9 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-l
   .nav.open ul{display:flex}
   .nav li a,.nav li button{display:block;width:100%;text-align:left;padding:14px 0}
   .nav .sub{position:static;display:none;border:0;background:transparent;padding:0 0 0 14px;min-width:0}
-  .nav .has-sub:hover .sub,.nav .has-sub:focus-within .sub{display:none}
-  .nav .has-sub.open .sub{display:flex}
+  /* phone menu: the Services links are always shown and never move. A desktop-style hover rule used to
+     collapse them under the finger, so taps landed on Contact or on nothing (fixed 16 Nov). */
+  .nav.open .sub,.nav .has-sub:hover .sub,.nav .has-sub:focus-within .sub,.nav .has-sub.open .sub{display:flex}
   .hero-links{padding:56px 20px 70px;flex-direction:column;gap:6px}
   .hero-links .sep{width:96px;height:1px;margin:8px 0}
   .coach-grid{grid-template-columns:1fr;gap:28px;padding:0 20px 64px}
