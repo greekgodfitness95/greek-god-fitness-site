@@ -60,6 +60,7 @@ Use the artifact database tools (`db_write`) on the Olympus HQ artifact:
 - **Security threats:** when Leonidas finds something unsafe (exposed key, broken/unsafe form or link, vulnerable code), log `{ type: "threat", agent: "leonidas", project, text }`. Leonidas calls every Spartan into a phalanx in front of the Pantheon. When it's fixed, log `{ type: "secured", agent: "leonidas", project, text }` and they stand down.
 
 ## Analytics (Pythagoras)
-- The Vercel Web Analytics script is on all three pages (merged into `main` on 16 Nov 2026).
+- **Live since 16 Nov 2026.** Web Analytics is enabled in Vercel and the script is on all three pages. Read numbers with the Vercel connector (`count_pageviews` etc., project `greek-god-fitness-site`).
+- Lesson: Vercel only serves `/_vercel/insights/script.js` from builds made *after* enabling Analytics, so if it is ever re-enabled, rebuild before deploying.
 - It only collects data once Web Analytics is enabled for the project in the Vercel dashboard (Project → Analytics → Enable) and the code is deployed. Check both before reading numbers (Vercel connector analytics tools, team `greek-god-fitness`).
 - Cost: free on Vercel's Hobby plan up to 50,000 events (page views) a month; beyond that collection pauses rather than charging. Ask Oliver before upgrading or adding any paid analytics.
