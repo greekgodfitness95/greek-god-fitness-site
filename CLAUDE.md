@@ -64,3 +64,10 @@ Use the artifact database tools (`db_write`) on the Olympus HQ artifact:
 - Lesson: Vercel only serves `/_vercel/insights/script.js` from builds made *after* enabling Analytics, so if it is ever re-enabled, rebuild before deploying.
 - It only collects data once Web Analytics is enabled for the project in the Vercel dashboard (Project → Analytics → Enable) and the code is deployed. Check both before reading numbers (Vercel connector analytics tools, team `greek-god-fitness`).
 - Cost: free on Vercel's Hobby plan up to 50,000 events (page views) a month; beyond that collection pauses rather than charging. Ask Oliver before upgrading or adding any paid analytics.
+
+## SEO (Odysseus)
+Goal from Oliver: top 3 on Google for Limassol personal training; the brand is premium/luxury.
+- Done 16 Nov 2026: keyword page titles ("… Personal Trainer in Limassol"), canonical + Open Graph tags, schema.org `HealthClub`/`LocalBusiness` JSON-LD on the homepage and `Service` on the other pages, `sitemap.xml`, `robots.txt`, hidden homepage `<h1>` mentions Limassol.
+- Keep the homepage meta description saying "Germasogeia, Cyprus" (Oliver's choice). Visible headings stay as designed.
+- WhatsApp links in `js/config.js` pre-fill "Hi Oliver, I found Greek God Fitness on your website…" so enquiries from the site are recognisable. Andre's `dietWhatsapp` is left alone.
+- Next (needs Oliver's Google account): Google Business Profile, Google Search Console (submit the sitemap), collect Google reviews. Opening hours are not known yet – add them to the schema when Oliver gives them.

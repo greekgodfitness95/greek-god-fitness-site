@@ -10,11 +10,11 @@
    ========================================================== */
 window.GGF_LINKS = {
   phone:        "tel:+35796069941",
-  whatsapp:     "https://wa.me/35796069941",
+  whatsapp:     "https://wa.me/35796069941?text=" + encodeURIComponent("Hi Oliver, I found Greek God Fitness on your website and I'm interested in personal training."),
   instagram:    "https://www.instagram.com/greekgodfitness95/",
   facebook:     "https://www.facebook.com/FitnessG0d",
   tiktok:       "https://www.tiktok.com/@greekgodfitness",
-  booking:      "https://wa.me/35796069941",   // "Book a Session" opens WhatsApp
+  booking:      "https://wa.me/35796069941?text=" + encodeURIComponent("Hi Oliver, I found Greek God Fitness on your website and I'd like to book my free session."),   // "Book a Session" opens WhatsApp with a ready message
 
   // The Diet Clinic page (Andre)
   dietWhatsapp:  "https://wa.me/447395293129",
