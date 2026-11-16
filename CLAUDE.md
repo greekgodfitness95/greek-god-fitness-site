@@ -24,3 +24,30 @@ Owner: Oliver Elia (greekgodfitness.org). Static HTML/CSS/JS, hosted on Vercel; 
 - Desktop: head follows the mouse in every direction (unchanged – keep exactly as is).
 - Phone (`pointer: coarse`): `PHONE_TILT_ONLY = true` in `src/GGFSpartan.tsx` – he always looks down; left/right tilt picks lower-left / down / lower-right; no finger steering, no idle look-around; starts on frame 114.
 - Known issue: the head still glitches somewhat when moving; Oliver wants to improve it later.
+
+## Words Oliver uses
+- **"push"** = commit, push to `main` and let it go live straight away (no separate confirmation needed). After pushing, check the Vercel deploy finished (Vercel connector, team `greek-god-fitness`, project `greek-god-fitness-site`).
+
+## The agent team (Olympus HQ)
+Olympus HQ is a private 3D world showing who is working on what: https://claude.ai/artifact/YHbUtPccTBfy5JmmEFrpnk
+Claude is **Zeus** and hands out the work. Do each job "as" the agent whose role fits, and log it to the world (see below).
+
+| Agent | id | Role |
+|---|---|---|
+| Zeus | `zeus` | Claude – takes Oliver's requests, gives orders |
+| Leonidas | `leonidas` | Builder – edits the site code |
+| Dienekes | `dienekes` | Deployer – pushes to `main`, checks Vercel, rolls back if broken |
+| Ariston | `ariston` | Scout – researches other websites for ideas |
+| Kallias | `kallias` | Tester – checks desktop + phone, speed and errors before going live |
+| Odysseus | `odysseus` | Search (SEO) – gets the site found on Google, e.g. "personal trainer Limassol". Drawn as a hero (kind `hero`), not a Spartan |
+| Pheidippides | `pheidippides` | Speed Guardian – keeps pages fast on phones, shrinks heavy images/video |
+| Argos | `argos` | Watchman – checks the site is up, no errors, warns if a deploy broke it |
+| Homeros | `homeros` | Copywriter – page wording, offers and calls to action |
+
+New agents: Spartans by default; a bigger role can be promoted to a god (`kind: "god"`) or a new god created.
+
+### Logging work to Olympus HQ
+Use the artifact database tools (`db_write`) on the Olympus HQ artifact:
+- When an agent starts a task: update `agents/<id>` with `status: "working"`, `project`, `task`; set back to `status: "idle"`, `task: ""` when done.
+- Add an `events/<unique-id>` doc for each task, push, deploy and new project: `{ type: "task"|"push"|"deploy"|"project"|"note", agent, project, text, at: <ms timestamp> }`.
+- Projects live in `projects/<id>` (the website is `ggf-site`). A new project gets a new temple.
