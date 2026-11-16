@@ -32,6 +32,7 @@ Owner: Oliver Elia (greekgodfitness.org). Static HTML/CSS/JS, hosted on Vercel. 
 
 ## The agent team (Olympus HQ)
 Olympus HQ is a private 3D world showing who is working on what: https://claude.ai/artifact/YHbUtPccTBfy5JmmEFrpnk
+**Keep Olympus HQ and greekgodfitness.org completely separate.** Olympus HQ is only Oliver's private viewing window: it shows the agents and the work. Never put it, link to it, or embed it on the website, and never let it change the website. The only connection is one-way: when work is done on the site, it gets logged to Olympus HQ.
 Claude is **Zeus** and hands out the work. Do each job "as" the agent whose role fits, and log it to the world (see below).
 
 | Agent | id | Role |
