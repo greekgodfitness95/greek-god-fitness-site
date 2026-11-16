@@ -94,6 +94,12 @@ const JUMPS: number[] = [
 
 const REACH = 0.9; // how far toward the edges of the pose range the screen edges map
 const IDLE_AFTER = 2500; // ms without input before a phone starts looking around by itself
+// Phones: he always looks down, and the phone's left-right tilt picks lower-left / down / lower-right.
+// No looking up, no finger dragging and no looking around on his own. Set to false for the old phone behaviour.
+const PHONE_TILT_ONLY = true;
+const PHONE_PITCH = -0.6; // how far down he looks on a phone
+const PHONE_YAW = 0.75; // how far he turns toward lower-left / lower-right at full tilt
+const PHONE_START_FRAME = 114; // a phone starts on this frame (facing down), so he never has to pass through looking up
 const TILT_RANGE = 20; // degrees of phone tilt that reach the full head turn
 const SMOOTH = 0.22; // 0..1, how quickly the aimed pose follows the cursor
 const MAX_STEP = 8; // most frames he may travel per screen refresh (higher = faster turns)
@@ -185,6 +191,7 @@ function useMouseScrubVideo(
     let lastTouch = -1e9;
     let tiltBase: { b: number; g: number } | null = null;
     const coarse = window.matchMedia("(pointer: coarse)").matches; // phone / tablet
+    if (coarse && PHONE_TILT_ONLY) { targetPitch = PHONE_PITCH; shown = PHONE_START_FRAME; }
 
     // A second layer used to dissolve over a skipped stretch of footage (see tick()).
     let canvas: HTMLCanvasElement | null = null;
@@ -246,7 +253,7 @@ function useMouseScrubVideo(
 
     const tick = () => {
       const now = performance.now();
-      if (coarse && now - lastInput > IDLE_AFTER) {
+      if (coarse && !PHONE_TILT_ONLY && now - lastInput > IDLE_AFTER) {
         // Nobody is touching or tilting: let him look around slowly on his own.
         const t = (now - lastInput - IDLE_AFTER) / 1000;
         targetYaw = 0.8 * Math.sin(t * 0.45);
@@ -306,8 +313,12 @@ function useMouseScrubVideo(
       targetPitch = (0.5 - y / window.innerHeight) * 2 * REACH;
     };
 
-    const onPointerMove = (e: PointerEvent) => aim(e.clientX, e.clientY);
+    const onPointerMove = (e: PointerEvent) => {
+      if (coarse && PHONE_TILT_ONLY && e.pointerType !== "mouse") return; // fingers do not steer him
+      aim(e.clientX, e.clientY);
+    };
     const onTouch = (e: TouchEvent) => {
+      if (coarse && PHONE_TILT_ONLY) return;
       lastTouch = performance.now();
       aim(e.touches[0].clientX, e.touches[0].clientY);
     };
@@ -329,11 +340,11 @@ function useMouseScrubVideo(
       if (!tiltBase) tiltBase = { b: e.beta, g: e.gamma };
       tiltBase.b += (e.beta - tiltBase.b) * 0.003;
       tiltBase.g += (e.gamma - tiltBase.g) * 0.003;
-      if (performance.now() - lastTouch < 1500) return; // a finger on the screen wins
+      if (!PHONE_TILT_ONLY && performance.now() - lastTouch < 1500) return; // a finger on the screen wins
       lastInput = performance.now();
       const clamp = (v: number) => Math.max(-1, Math.min(1, v));
-      targetYaw = clamp((e.gamma - tiltBase.g) / TILT_RANGE) * REACH;
-      targetPitch = clamp(-(e.beta - tiltBase.b) / TILT_RANGE) * REACH;
+      targetYaw = clamp((e.gamma - tiltBase.g) / TILT_RANGE) * (PHONE_TILT_ONLY ? PHONE_YAW : REACH);
+      targetPitch = PHONE_TILT_ONLY ? PHONE_PITCH : clamp(-(e.beta - tiltBase.b) / TILT_RANGE) * REACH;
     };
 
     // The listener is harmless until the sensor is allowed. Android sends events right
