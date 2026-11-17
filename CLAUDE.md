@@ -52,7 +52,7 @@ Claude is **Zeus** and hands out the work. Do each job "as" the agent whose role
 | Argos | `argos` | Watchman – checks the site is up, no errors, warns if a deploy broke it |
 | Homeros | `homeros` | Copywriter – page wording, offers and calls to action |
 | Pythagoras | `pythagoras` | Analyst – reads visitor numbers (pages, phone vs computer, where people come from, where they drop off) and suggests what to change. Uses Vercel Web Analytics |
-| Mnemosyne | `mnemosyne` | **Goddess of Memory** – keeps the records: updates CLAUDE.md and Oliver's key-moments file (`/home/user/Claude-Code-Key-Moments.md`, sent to him to download after every important change) so nothing is lost between sessions. God (kind `god`) |
+| Mnemosyne | `mnemosyne` | **Goddess of Memory** (female: long dark hair, laurel wreath, purple gown, golden scroll – kind `god`, look `goddess`) – keeps the records: updates CLAUDE.md and Oliver's key-moments file (`/home/user/Claude-Code-Key-Moments.md`, sent to him to download after every important change) so nothing is lost between sessions. God (kind `god`) |
 | Cadmus | `cadmus` | Translator – builds and maintains a Greek version of the site (locals search in Greek, e.g. "γυμναστής Λεμεσός"). Not started yet |
 
 Not added yet (suggested for later): Peitho (turns visitors into bookings), Calliope (articles/posts), Nike (reviews).
