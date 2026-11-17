@@ -77,3 +77,9 @@ Goal from Oliver: top 3 on Google for Limassol personal training; the brand is p
 - The coach quote ("It would be a shame to grow old…") uses the same molten-gold shine as the titles; its rules live at the end of `css/pop.css` (the approved block in `style.css` is untouched).
 - WhatsApp links in `js/config.js` pre-fill "Hi Oliver, I found Greek God Fitness on your website…" so enquiries from the site are recognisable. Andre's `dietWhatsapp` is left alone.
 - Next (needs Oliver's Google account): Google Business Profile, Google Search Console (submit the sitemap), collect Google reviews. Opening hours: Monday–Friday 07:00–18:00, closed Saturday and Sunday (Oliver, 16 Nov) – in the homepage schema. Google Business Profile (~97 five-star reviews): https://maps.app.goo.gl/j6efqRGQ95VzjWyq8 – linked in the homepage schema (`sameAs`, `hasMap`) and from the address link in the Location section.
+
+## AI search / GEO (Odysseus)
+Goal: get recommended by ChatGPT, Claude, Gemini, Perplexity, Grok for Limassol personal training.
+- `llms.txt` (site root) = plain fact sheet for AI assistants. Facts only from the site/Oliver; keep it in sync when hours, reviews count, services or contacts change.
+- `robots.txt` explicitly allows AI search crawlers (OAI-SearchBot, ChatGPT-User, GPTBot, ClaudeBot, Claude-User, Claude-SearchBot, PerplexityBot, Perplexity-User, Google-Extended, Applebot-Extended, Bingbot). Vercel firewall: default only, nothing blocks AI bots (checked 17 Nov).
+- Off-site (needs Oliver): Bing Places + Bing Webmaster Tools (ChatGPT search leans on Bing), Apple Business Connect, consistent listings and reviews beyond Google, local mentions/articles.
