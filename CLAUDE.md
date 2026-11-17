@@ -52,8 +52,15 @@ Claude is **Zeus** and hands out the work. Do each job "as" the agent whose role
 | Argos | `argos` | Watchman – checks the site is up, no errors, warns if a deploy broke it |
 | Homeros | `homeros` | Copywriter – page wording, offers and calls to action |
 | Pythagoras | `pythagoras` | Analyst – reads visitor numbers (pages, phone vs computer, where people come from, where they drop off) and suggests what to change. Uses Vercel Web Analytics |
+| Mnemosyne | `mnemosyne` | **Goddess of Memory** – keeps the records: updates CLAUDE.md and Oliver's key-moments file (`/home/user/Claude-Code-Key-Moments.md`, sent to him to download after every important change) so nothing is lost between sessions. God (kind `god`) |
+| Cadmus | `cadmus` | Translator – builds and maintains a Greek version of the site (locals search in Greek, e.g. "γυμναστής Λεμεσός"). Not started yet |
+
+Not added yet (suggested for later): Peitho (turns visitors into bookings), Calliope (articles/posts), Nike (reviews).
 
 New agents: Spartans by default; a bigger role can be promoted to a god (`kind: "god"`) or a new god created.
+
+### Weekly check-in (every Monday 08:39 Cyprus time)
+A scheduled task (`trig_01VJBeCmG766nLzRvf2B7KkM`, "Olympus weekly check-in") fires into the original Claude Code session (`session_01UUP78rSra6P5Et9sSxusf7`, where the Vercel and Olympus HQ connections work). Read-only: Argos (site health), Pythagoras (last week's visitors), Odysseus (search & mentions), logged live in Olympus HQ, then a short report for Oliver. It never edits, pushes or deploys.
 
 ### Logging work to Olympus HQ
 Use the artifact database tools (`db_write`) on the Olympus HQ artifact:
