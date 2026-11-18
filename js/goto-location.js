@@ -6,7 +6,8 @@
   const desc = document.querySelector(".descent");
   const intro = document.querySelector(".ascent");
   if (!desc || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const WIDE = 0.25;                                            // the descent's "back at the mountain" moment
+  // where the descent is back at the full mountain, and where its zoom out of the doorway starts (js/ascent.js)
+  const D = () => window.GGF_DESCENT || { wide: 0.25, zoom: 0 };
   const span = () => desc.offsetHeight - innerHeight;
   const at = q => desc.offsetTop + span() * q;
   const jump = y => window.scrollTo({ top: y, left: 0, behavior: "instant" });
@@ -33,12 +34,13 @@
     const atTop = intro && scrollY < intro.offsetHeight * 0.04;  // still looking at the mountain
     // From the very top the mountain is already on screen: carry straight on down.
     // From anywhere else: black fade, open close on the temple, pull back out to the mountain, then down.
-    const start = (atTop && !fromOtherPage) ? WIDE : 0;
-    if (start === 0) await dip(true);
+    const fromTop = atTop && !fromOtherPage;
+    const start = fromTop ? D().wide : D().zoom;
+    if (!fromTop) await dip(true);
     jump(at(start));
     await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
     dip(false);
-    glide(at(start), at(1), start === 0 ? 3500 : 3000);
+    glide(at(start), at(1), fromTop ? 3000 : 4500);
   }
 
   document.addEventListener("click", e => {

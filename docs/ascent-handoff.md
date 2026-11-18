@@ -29,7 +29,9 @@ Pictures (`scenes/`):
 
 Spartan → sunset seam: `.hero-stage.spartan::after` + `.olympus::before` blend through `#120705` (no hard line).
 
-### Location descent (`section.descent`, 420vh)
+### Location descent (`section.descent`, now 640vh – see update below)
+> **Update 18 Nov (Claude Code):** an 80vh black hold and a 140vh zoom out from inside the temple doorway were added in front of the timeline below. The `q` numbers below still apply, but only to the last 320vh (`D_BLACK`, `D_ZOOM`, `D_OLD` in `js/ascent.js`). The old fade-in of the temple while Meet the Coach scrolls away was replaced by the black hold.
+
 Progress `q`: 0–0.24 pull back from the temple to the exact opening view; 0.28–0.60 straight down
 like a lift (no sideways move, no zoom) while the cloud bank rises; ~0.56–0.58 full white; 0.58–0.86
 the city scene rises from below; 0.82–0.9 "LOCATION" + address; 0.86–0.93 gold pin + "Get directions"

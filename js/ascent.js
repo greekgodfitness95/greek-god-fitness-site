@@ -13,7 +13,13 @@
   const gal = oly ? [...oly.querySelectorAll(".gallery img")] : [];
   const desc = $(".descent"), dPlate = desc && desc.querySelector(".d-plate"), dCB = desc && desc.querySelector(".d-cb"),
         dBank = desc && desc.querySelector(".d-bank"), dFog = desc && desc.querySelector(".d-fog"), dLoc = desc && desc.querySelector(".d-loc"),
-        dScene = desc && desc.querySelector(".d-scene"), dPin = $("#d-pin"), dText = desc && desc.querySelector(".d-text");
+        dScene = desc && desc.querySelector(".d-scene"), dPin = $("#d-pin"), dText = desc && desc.querySelector(".d-text"),
+        dPeak = $("#d-peak"), dDetail = $("#d-detail");
+  // Location descent, in vh of scrolling (must add up to the .descent height minus one screen, css/ascent.css):
+  // a black hold after Meet the Coach, a zoom out from inside the temple doorway, then the original descent.
+  const D_BLACK = 80, D_ZOOM = 140, D_OLD = 320, D_ALL = D_BLACK + D_ZOOM + D_OLD;
+  // for the menu's Location shortcut (js/goto-location.js): where the zoom out starts, and where we are back at the full mountain
+  window.GGF_DESCENT = { zoom: D_BLACK / D_ALL, wide: (D_BLACK + D_ZOOM + 0.25 * D_OLD) / D_ALL };
   // city picture (taller than the screen): Limassol seafront under the mountain. Fractions of the picture.
   const SCENE_R = 1264 / 1536, CITY_PIN = [0.511, 0.512], CITY_LOC_Y = 0.36, CITY_END = 0.20;
   const olyHead = oly ? [...oly.querySelectorAll(".olympus-inner h2, .olympus-inner .btn")] : [];
@@ -156,21 +162,52 @@
     if (desc && !reduce) {
       const r = desc.getBoundingClientRect();
       if (r.bottom > 0 && r.top < H) {
-        const q = progress(desc);
+        const qAll = progress(desc);
+        // 1) black hold, 2) zoom out from inside the doorway (zt), 3) the original descent (q, unchanged timeline)
+        const zt = clamp((qAll * D_ALL - D_BLACK) / D_ZOOM);
+        const q = clamp((qAll * D_ALL - D_BLACK - D_ZOOM) / D_OLD);
         // pretend we are back at the very top of the homepage: the menu loses its dark bar too
         if (nav && r.top <= 1 && r.bottom > H * 0.5) nav.classList.add("clear");
         const pull = inout(seg(q, 0.0, 0.24)), down = inout(seg(q, 0.28, 0.60));
         // from close on the temple back out to the exact opening view, then straight down like a lift:
         // same size, no sideways movement, the picture only slides up
-        const S = 3.0 - 2.0 * pull;
-        let Tx = lerp(W / 2 - px - 3.0 * FX * pw, 0, pull), Ty = lerp(H * 0.42 - py - 3.0 * FY * ph, 0, pull);
+        let S = 3.0 - 2.0 * pull, ax = FX, ay = FY, sy = H * 0.42;
+        if (zt < 1) {
+          // coming back out of the doorway: same door zoom as the climb, reversed, ending exactly where the pull starts
+          const k = inout(zt);
+          const fill = Math.min(14, (W * 1.04) / (FW * pw));
+          const sDoor = Math.min(48, Math.max(fill * 2, (W * 1.3) / (DOORW * pw)));
+          S = sDoor * Math.pow(3.0 / sDoor, k);
+          ay = lerp(DY, FY, k); sy = lerp(H * 0.5, H * 0.42, k);
+        }
+        const S0 = zt < 1 ? S : 3.0;   // the pull starts from the 3x view exactly as before (keeps the temple centred)
+        let Tx = lerp(W / 2 - px - S0 * ax * pw, 0, pull), Ty = lerp(sy - py - S0 * ay * ph, 0, pull);
         Tx = Math.min(-px, Math.max(W - px - S * pw, Tx));
         Ty = Math.min(-py, Math.max(H - py - S * ph, Ty));
         Ty -= down * H * 1.1;
+        // same memory guard as the climb: hide what the solid temple completely covers, cap picture sizes
+        const dL = px + Tx + S * CX * pw, dT = py + Ty + S * CY * ph, dW = S * CW * pw, dH = S * CH * ph;
+        const covered = dL + 0.22 * dW <= 0 && dL + 0.80 * dW >= W && dT + 0.19 * dH <= 0 && dT + 0.80 * dH >= H;
         dPlate.style.transform = `translate3d(${Tx}px,${Ty}px,0) scale(${S})`;
+        const plateOp = seg(zt, 0, 0.14) * (1 - seg(q, 0.56, 0.58));   // fades up out of the black, inside the doorway
+        const sharpOp = plateOp * (1 - seg(q, 0.28, 0.36));            // sharp temple + peak overlays, gone as we drop
+        const sharp = (el, x, y, w, h, hide) => {
+          if (!el) return;
+          const on = sharpOp > 0 && !hide;
+          el.style.opacity = sharpOp.toFixed(3);
+          el.style.visibility = on ? "visible" : "hidden";
+          if (on) {
+            const ew = S * w * pw, eh = S * h * ph, kk = Math.min(1, 4096 / Math.max(ew, eh));
+            el.style.width = (ew * kk) + "px"; el.style.height = (eh * kk) + "px";
+            el.style.transform = `translate3d(${px + Tx + S * x * pw}px,${py + Ty + S * y * ph}px,0)` + (kk < 1 ? ` scale(${1 / kk})` : "");
+          }
+        };
+        sharp(dPeak, PX, PY, PW, PH, covered);
+        sharp(dDetail, CX, CY, CW, CH, false);
         desc.firstElementChild.style.background = down > 0 ? "#eef3f8" : "";
         dPlate.classList.toggle("sink", down > 0);   // below the picture there is only cloud
-        dPlate.style.opacity = (Math.max(clamp(1 - r.top / H), seg(q, 0, 0.07)) * (1 - seg(q, 0.56, 0.58))).toFixed(3);   // already fading up as it rises in under Meet the Coach
+        dPlate.style.opacity = plateOp.toFixed(3);
+        dPlate.style.visibility = plateOp > 0 && !covered ? "visible" : "hidden";
         dCB.style.opacity = (0.75 * seg(q, 0.12, 0.24)).toFixed(3);
         // the cloud bank rises to swallow the view, then parts
         const rise = inout(seg(q, 0.38, 0.58)), part = 0;

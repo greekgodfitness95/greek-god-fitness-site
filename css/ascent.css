@@ -156,7 +156,8 @@ html{scroll-behavior:auto}
 @view-transition{navigation:auto}
 
 /* ---------- Location: pull back to the mountain, fall through the clouds, land on the map ---------- */
-.descent{position:relative;height:420vh;background:#050505}
+.descent{position:relative;height:640vh;background:#050505}   /* 80vh black hold + 140vh zoom out + the original 320vh descent (see js/ascent.js) */
+.d-sharp{position:absolute;left:0;top:0;max-width:none;width:0;height:0;opacity:0;visibility:hidden;pointer-events:none;transform-origin:0 0}
 .d-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#050505}
 .d-plate{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform,opacity;background:#7fb2dd;opacity:0}
 .d-plate img{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -192,7 +193,7 @@ html{scroll-behavior:auto}
 @keyframes pindrop{0%,100%{translate:0 0}50%{translate:0 -6px}}
 @media (prefers-reduced-motion:reduce){
   .descent{height:auto}.d-stage{position:relative;height:auto}
-  .d-plate,.d-cb,.d-bank,.d-fog{display:none}.d-loc{position:relative;height:100vh;opacity:1;visibility:visible}.d-pin .pin{animation:none}
+  .d-plate,.d-sharp,.d-cb,.d-bank,.d-fog{display:none}.d-loc{position:relative;height:100vh;opacity:1;visibility:visible}.d-pin .pin{animation:none}
 }
 .d-plate.sink::after{opacity:1}
 
