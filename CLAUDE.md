@@ -42,7 +42,8 @@ Owner: Oliver Elia (greekgodfitness.org). Static HTML/CSS/JS, hosted on Vercel. 
 - **"push"** = commit and push to `main`. Vercel builds it (state READY) but greekgodfitness.org does **not** change yet. Give Oliver the build's preview URL if useful.
 - **"deploy"** = make it live: promote the latest READY production deployment of `main` to greekgodfitness.org (Vercel connector `request_promote`, team `greek-god-fitness`, project `greek-god-fitness-site`), then confirm the domain serves it. If there are unpushed changes, push first.
 - Log both to Olympus HQ (Dienekes): a `push` event on push, a `deploy` event when it goes live.
-- When the stop-hook reminder asks to commit/push, just do it (Oliver approved this): a push is safe because it doesn't go live. Never **deploy** without Oliver saying "deploy".
+- When the stop-hook reminder asks to commit/push, just do it (Oliver approved this): a push is safe because it doesn't go live.
+- **Deploy without asking (Oliver, 18 Nov):** once a change is finished and has passed testing (desktop + phone, no errors, what he asked for), push AND deploy it straight away, confirm the live domain serves it, and tell him it's live. Don't end with "say deploy". Still ask first for anything that costs money, deletes things, or that he hasn't approved (e.g. a big redesign he hasn't seen yet – show a preview first).
 
 ## The agent team (Olympus HQ)
 Olympus HQ is a private 3D world showing who is working on what: https://claude.ai/artifact/YHbUtPccTBfy5JmmEFrpnk
