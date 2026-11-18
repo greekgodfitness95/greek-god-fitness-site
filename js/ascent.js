@@ -72,25 +72,37 @@
     const Tx = sx - px - S * fx, Ty = sy - py - S * fy;
     plate.style.transform = `translate3d(${Tx}px,${Ty}px,0) scale(${S})`;
     const plateOp = 1 - seg(p, 0.36, 0.39);
+    // Phones (iPhone Safari especially) throw away huge picture layers to save memory, then show
+    // only the temple when you scroll back to the top. So: once the screen is entirely inside the
+    // solid part of the temple close-up (around the door), the mountain and peak behind it can't be
+    // seen and stop being drawn - that is exactly when they would otherwise be blown up 10-48x.
+    const dL = px + Tx + S * CX * pw, dT = py + Ty + S * CY * ph, dW = S * CW * pw, dH = S * CH * ph;
+    const covered = dL + 0.22 * dW <= 0 && dL + 0.80 * dW >= W && dT + 0.19 * dH <= 0 && dT + 0.80 * dH >= H;
     plate.style.opacity = plateOp;
-    plate.style.visibility = plateOp > 0 ? "visible" : "hidden";
+    plate.style.visibility = plateOp > 0 && !covered ? "visible" : "hidden";
 
     // lettering is drawn on top at real size, so it stays sharp at any zoom
     // the temple is baked into the mountain picture; this full-resolution copy sits exactly on top of it
     // so it stays sharp at any zoom (the mountain picture only has ~170px of temple)
     const dOp = plateOp;
     // sized with width/height (not scale) so the browser draws them from the full-resolution files
-    const lay = (el, x, y, w, h) => {
+    // Never lay a picture out bigger than MAXPX; past that it is magnified instead (same look, far less
+    // memory - beyond that size the picture is already shown larger than its own pixels anyway).
+    const MAXPX = 4096;
+    const lay = (el, x, y, w, h, hide) => {
       if (!el) return;
+      const on = dOp > 0 && !hide;
       el.style.opacity = dOp.toFixed(3);
-      el.style.visibility = dOp > 0 ? "visible" : "hidden";
-      if (dOp > 0) {
-        el.style.width = (S * w * pw) + "px"; el.style.height = (S * h * ph) + "px";
-        el.style.transform = `translate3d(${px + Tx + S * x * pw}px,${py + Ty + S * y * ph}px,0)`;
+      el.style.visibility = on ? "visible" : "hidden";
+      if (on) {
+        const ew = S * w * pw, eh = S * h * ph, k = Math.min(1, MAXPX / Math.max(ew, eh));
+        el.style.width = (ew * k) + "px"; el.style.height = (eh * k) + "px";
+        el.style.transformOrigin = "0 0";
+        el.style.transform = `translate3d(${px + Tx + S * x * pw}px,${py + Ty + S * y * ph}px,0)` + (k < 1 ? ` scale(${1 / k})` : "");
       }
     };
-    lay(peak, PX, PY, PW, PH);
-    lay(detail, CX, CY, CW, CH);
+    lay(peak, PX, PY, PW, PH, covered);
+    lay(detail, CX, CY, CW, CH, false);
     // the Greek God Fitness logo is carved into the temple pictures themselves (no separate lettering)
 
     const part = ease(seg(p, 0, 0.2));
