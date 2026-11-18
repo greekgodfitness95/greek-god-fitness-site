@@ -104,9 +104,11 @@ const IDLE_AFTER = 2500; // ms without input before a phone starts looking aroun
 // Phones: he always looks down, and the phone's left-right tilt picks lower-left / down / lower-right.
 // No looking up, no finger dragging and no looking around on his own. Set to false for the old phone behaviour.
 const PHONE_TILT_ONLY = true;
-const PHONE_PITCH = 0; // phone: head stays level - he only turns left and right
-const PHONE_YAW = 0.85; // how far he turns left / right at full tilt
-const PHONE_START_FRAME = 0; // a phone starts facing straight ahead (the neutral frame)
+// Phone (Oliver, 18 Nov): he only ever looks lower-left, down or lower-right, chosen by tilting the phone -
+// never up. The down-looking poses all sit together in the clip (frames ~90-145), so he never passes through looking up.
+const PHONE_PITCH = -0.6; // how far down he looks on a phone
+const PHONE_YAW = 0.75; // how far he turns toward lower-left / lower-right at full tilt
+const PHONE_START_FRAME = 114; // a phone starts on this frame (facing down)
 const TILT_RANGE = 20; // degrees of phone tilt that reach the full head turn
 const SMOOTH = 0.22; // 0..1, how quickly the aimed pose follows the cursor
 const MAX_STEP = 8; // most frames he may travel per screen refresh (higher = faster turns)
