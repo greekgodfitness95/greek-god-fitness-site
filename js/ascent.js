@@ -17,7 +17,7 @@
         dPeak = $("#d-peak"), dDetail = $("#d-detail");
   // Location descent, in vh of scrolling (must add up to the .descent height minus one screen, css/ascent.css):
   // a black hold after Meet the Coach, a zoom out from inside the temple doorway, then the original descent.
-  const D_BLACK = 80, D_ZOOM = 140, D_OLD = 320, D_ALL = D_BLACK + D_ZOOM + D_OLD;
+  const D_BLACK = 10, D_ZOOM = 140, D_OLD = 320, D_ALL = D_BLACK + D_ZOOM + D_OLD;
   // for the menu's Location shortcut (js/goto-location.js): where the zoom out starts, and where we are back at the full mountain
   window.GGF_DESCENT = { zoom: D_BLACK / D_ALL, wide: (D_BLACK + D_ZOOM + 0.25 * D_OLD) / D_ALL };
   // city picture (taller than the screen): Limassol seafront under the mountain. Fractions of the picture.
@@ -189,7 +189,7 @@
         const dL = px + Tx + S * CX * pw, dT = py + Ty + S * CY * ph, dW = S * CW * pw, dH = S * CH * ph;
         const covered = dL + 0.22 * dW <= 0 && dL + 0.80 * dW >= W && dT + 0.19 * dH <= 0 && dT + 0.80 * dH >= H;
         dPlate.style.transform = `translate3d(${Tx}px,${Ty}px,0) scale(${S})`;
-        const plateOp = seg(zt, 0, 0.14) * (1 - seg(q, 0.56, 0.58));   // fades up out of the black, inside the doorway
+        const plateOp = seg(zt, 0, 0.09) * (1 - seg(q, 0.56, 0.58));   // fades up out of the black, inside the doorway
         const sharpOp = plateOp * (1 - seg(q, 0.28, 0.36));            // sharp temple + peak overlays, gone as we drop
         const sharp = (el, x, y, w, h, hide) => {
           if (!el) return;

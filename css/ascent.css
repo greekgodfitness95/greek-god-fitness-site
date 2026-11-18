@@ -156,7 +156,7 @@ html{scroll-behavior:auto}
 @view-transition{navigation:auto}
 
 /* ---------- Location: pull back to the mountain, fall through the clouds, land on the map ---------- */
-.descent{position:relative;height:640vh;background:#050505}   /* 80vh black hold + 140vh zoom out + the original 320vh descent (see js/ascent.js) */
+.descent{position:relative;height:570vh;background:#050505}   /* 10vh black hold + 140vh zoom out + the original 320vh descent + one screen (see js/ascent.js D_*) */
 .d-sharp{position:absolute;left:0;top:0;max-width:none;width:0;height:0;opacity:0;visibility:hidden;pointer-events:none;transform-origin:0 0}
 .d-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#050505}
 .d-plate{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform,opacity;background:#7fb2dd;opacity:0}
