@@ -6,7 +6,8 @@ const stage = document.getElementById("hero-stage");
 if (!stage) return;
 
 // The ember code measures "the screen" and reads mouse positions. Here those mean the hero box.
-let innerWidth = stage.clientWidth, innerHeight = stage.clientHeight;
+// (falls back to the window size while the hero is hidden, so the embers never see a zero-size screen)
+let innerWidth = stage.clientWidth || window.innerWidth, innerHeight = stage.clientHeight || window.innerHeight;
 const resizeFns = [];
 const toLocal = p => { const r = stage.getBoundingClientRect(); return { clientX: p.clientX - r.left, clientY: p.clientY - r.top }; };
 const addEventListener = (type, fn, opts) => {
@@ -16,6 +17,7 @@ const addEventListener = (type, fn, opts) => {
   return window.addEventListener(type, fn, opts);
 };
 new ResizeObserver(() => {
+  if (!stage.clientWidth || !stage.clientHeight) return;   // hidden: keep the last real size
   innerWidth = stage.clientWidth; innerHeight = stage.clientHeight;
   resizeFns.forEach(f => f());
 }).observe(stage);

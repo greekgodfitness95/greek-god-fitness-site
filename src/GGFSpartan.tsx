@@ -7,6 +7,13 @@ import React, { useEffect, useRef, type RefObject } from "react";
    ===================================================================== */
 const VIDEO_SRC =
   "https://greekgodfitness95.github.io/Greek-God-Fitness-assets/spartan-scrub-4k-small.mp4";
+// Phones held upright get a portrait cut of the same footage (about 4 MB instead of 14 MB). It shows exactly
+// the part of the picture a phone screen shows anyway, so he looks the same - just loads far faster.
+const PHONE_VIDEO_SRC = "/media/spartan-scrub-phone.mp4";
+const pickVideoSrc = () =>
+  typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches &&
+  window.innerHeight > window.innerWidth && window.innerWidth / window.innerHeight < 0.6
+    ? PHONE_VIDEO_SRC : VIDEO_SRC;
 
 const HEADING = "UNLEASH YOUR INNER GOD";
 const HEADING_FONT_SIZE = 44;          // px at 1440 wide (shrinks on small screens)
@@ -97,9 +104,9 @@ const IDLE_AFTER = 2500; // ms without input before a phone starts looking aroun
 // Phones: he always looks down, and the phone's left-right tilt picks lower-left / down / lower-right.
 // No looking up, no finger dragging and no looking around on his own. Set to false for the old phone behaviour.
 const PHONE_TILT_ONLY = true;
-const PHONE_PITCH = -0.6; // how far down he looks on a phone
-const PHONE_YAW = 0.75; // how far he turns toward lower-left / lower-right at full tilt
-const PHONE_START_FRAME = 114; // a phone starts on this frame (facing down), so he never has to pass through looking up
+const PHONE_PITCH = 0; // phone: head stays level - he only turns left and right
+const PHONE_YAW = 0.85; // how far he turns left / right at full tilt
+const PHONE_START_FRAME = 0; // a phone starts facing straight ahead (the neutral frame)
 const TILT_RANGE = 20; // degrees of phone tilt that reach the full head turn
 const SMOOTH = 0.22; // 0..1, how quickly the aimed pose follows the cursor
 const MAX_STEP = 8; // most frames he may travel per screen refresh (higher = faster turns)
@@ -190,6 +197,9 @@ function useMouseScrubVideo(
     let lastInput = performance.now();
     let lastTouch = -1e9;
     let tiltBase: { b: number; g: number } | null = null;
+    // Set by window.GGFSpartan.faceFront(): ignore the cursor/tilt and walk his head back to this frame.
+    let forceGoal = -1;
+    let arrive: (() => void) | null = null;
     const coarse = window.matchMedia("(pointer: coarse)").matches; // phone / tablet
     if (coarse && PHONE_TILT_ONLY) { targetPitch = PHONE_PITCH; shown = PHONE_START_FRAME; }
 
@@ -276,6 +286,10 @@ function useMouseScrubVideo(
           const s = cost[f] + aimCost(f);
           if (s < goalScore) { goalScore = s; goal = f; }
         }
+        if (forceGoal >= 0) {
+          goal = forceGoal;
+          if (here === forceGoal && arrive && video.readyState >= 2) { const a = arrive; arrive = null; a(); }
+        }
         if (goal !== here) {
           // Rebuild the route here -> goal.
           const route: number[] = [goal];
@@ -308,6 +322,7 @@ function useMouseScrubVideo(
     };
 
     const aim = (x: number, y: number) => {
+      if (forceGoal >= 0) return;
       lastInput = performance.now();
       targetYaw = (x / window.innerWidth - 0.5) * 2 * REACH;
       targetPitch = (0.5 - y / window.innerHeight) * 2 * REACH;
@@ -391,6 +406,22 @@ function useMouseScrubVideo(
     if (video.readyState >= 1) onReady();
     raf = requestAnimationFrame(tick);
 
+    // Lets the page turn his head back to the front (exactly the clip's first frame) before
+    // a scripted move, e.g. the camera orbit when Personal Training is clicked.
+    (window as any).GGFSpartan = {
+      faceFront: () => new Promise<HTMLVideoElement>((res) => { forceGoal = NEUTRAL_FRAME; arrive = () => res(video); }),
+      faceTo: (f: number) => new Promise<HTMLVideoElement>((res) => { forceGoal = Math.max(0, Math.min(FRAME_COUNT - 1, Math.round(f))); arrive = () => res(video); }),
+      frame: () => shown,
+      // jump straight to a frame (no walking along the footage); resolves once it is on screen
+      jumpTo: (f: number) => new Promise<HTMLVideoElement>((res) => {
+        const g = Math.max(0, Math.min(FRAME_COUNT - 1, Math.round(f)));
+        forceGoal = g; arrive = null;
+        video.addEventListener("seeked", () => res(video), { once: true });
+        seek(g);
+      }),
+      release: () => { forceGoal = -1; arrive = null; },
+    };
+
     return () => {
       cancelled = true;
       cancelAnimationFrame(raf);
@@ -420,7 +451,7 @@ export default function GGFSpartan() {
     >
       <video
         ref={videoRef}
-        src={VIDEO_SRC + "#t=0.001"}
+        src={pickVideoSrc() + "#t=0.001"}
         muted
         playsInline
         preload="auto"

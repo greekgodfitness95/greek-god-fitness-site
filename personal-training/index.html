@@ -16,17 +16,25 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","serviceType":"Personal training","name":"Personal Training in Limassol","provider":{"@id":"https://greekgodfitness.org/#business"},"areaServed":{"@type":"City","name":"Limassol"},"url":"https://greekgodfitness.org/personal-training"}</script>
 <meta name="description" content="Luxury one-to-one personal training in Limassol with coach Oliver Elia. Weight loss, muscle gain, posture and fitness programs built for you. Your first session is free.">
 <meta name="theme-color" content="#000000">
-<link rel="icon" href="/assets/logo.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@400;500;600;700&family=Anton&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/style.css">
 <link rel="stylesheet" href="/css/pop.css">
+<script defer src="/_vercel/insights/script.js"></script>
 <link rel="stylesheet" href="/css/faq.css">
+<link rel="stylesheet" href="/css/pt-hero.css">
+<link rel="preload" as="image" href="/media/spartan-back.webp" media="(min-aspect-ratio:3/5)">
+<link rel="preload" as="image" href="/media/spartan-back-tall.webp" media="(max-aspect-ratio:3/5)">
 <!-- Vercel Web Analytics (Pythagoras): tiny, cookie-free, loads after the page -->
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
-<script defer src="/_vercel/insights/script.js"></script>
-</head><body>
+
+</head><body class="pt-page">
+<div class="pt-backdrop" aria-hidden="true"><i class="v1"></i><i class="v2"></i></div>
+<script src="/js/pt-hero.js"></script>
 <header class="nav" id="nav">
   <div class="nav-inner">
     <a class="brand" href="/">Greek God Fitness</a>
@@ -40,14 +48,14 @@
           <li><a href="/personal-training">Personal Training</a></li>
           <li><a href="/nutrition">Nutrition Plan</a></li>
         </ul></li>
-      <li><a href="/#location">Contact</a></li>
+      <li><a href="/?go=location">Location</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
   </div>
 </header>
 <main class="page-top">
-  <h1 class="page-title">Personal Training</h1>
-  <section class="pt-split">
-    <img src="/assets/pt-woman.jpg" alt="Client training with a barbell during a personal training session in Limassol" width="656" height="811">
+  <section class="pt-hero"><h1>Personal Training</h1></section>
+  <section class="pt-split pt-text">
     <div class="txt">
       <p><span class="first">First session</span> is <span class="free">FREE!</span> Embark on your fitness journey with Greek God Fitness. Our primary focus is to ensure your comfort and enjoyment during your first session, allowing us to keenly observe your strengths and areas for improvement. Armed with this insight, we make program designed exclusively for you. Join us for a complimentary session and experience personalized fitness like never before.</p>
       <p>With personalized training programs designed to meet your specific needs and expert guidance from certified trainers, we ensure a transformative experience. What distinguishes us is not just the workout routine but the dedication to your overall health and fitness journey. At Greek God Fitness, we blend expertise with passion, creating an environment where your goals become our shared mission. Join us, and let our dedication be the catalyst for your success.</p>
@@ -77,11 +85,10 @@
     <details><summary>Is it right for beginners?</summary><p>Absolutely. Whether you are starting your fitness journey or you are an experienced athlete, every session is tailored to your level, so you progress safely and enjoy every workout.</p></details>
     <details><summary>How do I book?</summary><p>Message Oliver on <a href="#" data-link="whatsapp">WhatsApp</a>. We usually reply within 30 minutes, and together we'll choose a day and time for your free first session.</p></details>
   </section>
-  <div class="fullimg"><img src="/assets/pt-deadlift.jpg" alt="Deadlift coaching at Greek God Fitness, Limassol" width="1440" height="630" loading="lazy"></div>
   <div class="back"><a href="/"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg> Back to home</a></div>
 </main>
-<footer class="footer">
-  <img src="/assets/logo.png" alt="Greek God Fitness logo" width="80" height="76">
+<footer class="footer" id="contact">
+  <img class="footer-logo" src="/assets/logo-footer.webp" alt="Greek God Fitness logo" width="400" height="331" loading="lazy">
   <div class="icons">
   <a href="#" data-link="phone" aria-label="Phone"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
   <a href="#" data-link="facebook" aria-label="Facebook"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
@@ -91,5 +98,6 @@
 </footer>
 <script src="/js/config.js"></script>
 <script src="/js/site.js"></script>
+<script src="/js/page-fade.js"></script>
 </body>
 </html>

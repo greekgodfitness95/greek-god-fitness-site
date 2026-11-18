@@ -1,0 +1,215 @@
+/* =========================================================
+   "The Ascent" – scroll journey for the homepage
+   mountain + temple -> through the doorway -> darkness -> Spartan -> coach
+   -> Spartan -> Olympus at sunset (gallery) -> First session free
+   Only transforms and opacity are animated, so it stays smooth on phones.
+   ========================================================= */
+:root{--ease:cubic-bezier(.2,.7,.2,1)}
+html{scroll-behavior:auto}
+
+/* nav floats clear over the sky, solid again once the journey has started */
+.nav{transition:background .4s ease,border-color .4s ease}
+.nav.clear{background:transparent;border-bottom-color:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
+.nav.clear .brand{color:#fff}
+
+/* Desktop & tablet: no hamburger. Same subtle look as the "Greek God Fitness" name on the left -
+   small white letters floating over the scene, with the menu gathered on the right.
+   Phones (640px and below) keep the hamburger menu. */
+@media (min-width:641px){
+  .nav-inner{justify-content:space-between;padding:0 clamp(20px,3.9vw,56px)}
+  .nav .burger{display:none!important}
+  .nav .brand{display:block;font:600 11px/1 var(--sans);letter-spacing:.2em;color:var(--gold);text-transform:uppercase;text-decoration:none}
+  .nav.clear .brand{color:#fff}
+  .nav ul{position:static;display:flex;flex-direction:row;align-items:center;background:none;padding:0;gap:clamp(8px,.95vw,13px)}
+  .nav > .nav-inner > ul > li > a,.nav > .nav-inner > ul > li > button{display:flex;align-items:center;gap:5px;width:auto;padding:10px 0;
+    font:600 5px/1 var(--sans);letter-spacing:.22em;color:#fff}
+  .nav.clear > .nav-inner > ul > li > a,.nav.clear > .nav-inner > ul > li > button,.nav.clear .brand{text-shadow:0 1px 6px rgba(0,0,0,.35)}
+  .nav > .nav-inner > ul > li > a:hover,.nav > .nav-inner > ul > li > button:hover{color:var(--gold)}
+  /* Services drop-down: see-through, the scene shows behind it */
+  .nav .sub{position:absolute;top:100%;right:-6px;display:none;flex-direction:column;min-width:0;background:transparent;border:0;padding:2px 0}
+  .nav .has-sub:hover .sub,.nav .has-sub:focus-within .sub,.nav .has-sub.open .sub{display:flex}
+  .nav .sub a{display:block;width:auto;padding:6px;text-align:right;font-size:5px;letter-spacing:.22em;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+  .nav .sub a:hover{color:var(--gold);background:transparent}
+}
+@media (min-width:641px) and (max-width:899px){ .nav .brand{display:none} .nav-inner{justify-content:flex-end} }
+
+/* ---------- 1. Mountain & temple ---------- */
+.ascent{position:relative;height:442vh;background:#0b0907}
+.ascent .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#0b0907}
+.plate{background:#7fb2dd}
+.plate{position:absolute;left:0;top:0;width:100vw;height:56.25vw;transform-origin:0 0;will-change:transform}
+.plate img{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover}
+.frieze{ /* sized and placed by ascent.js so it stays sharp at every zoom */
+  position:absolute;left:0;top:0;z-index:2;margin:0;white-space:nowrap;pointer-events:none;
+  font:700 10px/1 "Cinzel","Cormorant Garamond",serif;letter-spacing:.12em;text-transform:uppercase;
+  color:#0c0a08;
+  text-shadow:0 .05em 0 rgba(255,250,235,.55),0 -.03em 0 rgba(0,0,0,.35);
+}
+.frieze::after{ /* a little gold catches the light as you get close */
+  content:attr(data-text);position:absolute;inset:0;letter-spacing:inherit;
+  background:linear-gradient(100deg,transparent 35%,rgba(255,226,140,.9) 50%,transparent 65%) 120% 0/300% 100% no-repeat;
+  -webkit-background-clip:text;background-clip:text;color:transparent;opacity:var(--glint,0);
+}
+.frieze.sw::after{animation:glint 1.8s ease-out forwards}
+@keyframes glint{from{background-position:120% 0}to{background-position:-20% 0}}
+
+/* clouds: soft painted puffs, no images */
+.clouds{position:absolute;pointer-events:none;will-change:transform,opacity}
+.clouds-back{left:-10%;right:-10%;top:58%;height:42%;
+  background:
+    radial-gradient(closest-side,rgba(255,255,255,.95),rgba(255,255,255,0)) 4% 40%/26% 70% no-repeat,
+    radial-gradient(closest-side,rgba(255,255,255,.9),rgba(255,255,255,0)) 22% 30%/30% 80% no-repeat,
+    radial-gradient(closest-side,rgba(250,252,255,.95),rgba(255,255,255,0)) 46% 50%/34% 75% no-repeat,
+    radial-gradient(closest-side,rgba(255,255,255,.9),rgba(255,255,255,0)) 70% 32%/30% 80% no-repeat,
+    radial-gradient(closest-side,rgba(255,255,255,.95),rgba(255,255,255,0)) 94% 45%/28% 70% no-repeat;
+  animation:drift 38s ease-in-out infinite alternate;opacity:.75}
+.clouds-left,.clouds-right{bottom:-14%;width:72%;height:62%;
+  background:
+    radial-gradient(closest-side,#fff,rgba(255,255,255,0)) 20% 70%/62% 70% no-repeat,
+    radial-gradient(closest-side,#fdfeff,rgba(255,255,255,0)) 60% 55%/58% 64% no-repeat,
+    radial-gradient(closest-side,rgba(255,255,255,.95),rgba(255,255,255,0)) 85% 80%/50% 60% no-repeat,
+    radial-gradient(closest-side,rgba(236,242,250,.95),rgba(255,255,255,0)) 40% 95%/80% 50% no-repeat}
+.clouds-left{left:-18%}
+.clouds-right{right:-18%;transform:scaleX(-1)}
+@keyframes drift{from{transform:translateX(-2%)}to{transform:translateX(2%)}}
+
+
+
+.mist{position:absolute;inset:0;pointer-events:none;opacity:0;background:radial-gradient(ellipse at 50% 50%,#1a120a,#0b0907 70%)}
+.hint{position:absolute;left:50%;bottom:4.5%;transform:translateX(-50%);margin:0;font:600 11px/1 var(--sans);letter-spacing:.32em;text-transform:uppercase;color:#fff;text-shadow:0 1px 8px rgba(0,40,80,.5);display:flex;flex-direction:column;align-items:center;gap:12px;transition:opacity .4s}
+.hint span{width:1px;height:38px;background:linear-gradient(#fff,rgba(255,255,255,0));animation:hint 1.8s ease-in-out infinite}
+@keyframes hint{0%{transform:scaleY(.2);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}100%{transform:scaleY(1);opacity:0}}
+
+
+
+/* ---------- 3. Spartan out of the darkness, two paths either side ---------- */
+.ascent .hero-stage.spartan{position:absolute;inset:0;width:auto;height:auto;max-width:none;margin:0;transform:translate3d(-300vw,0,0);background:#000;z-index:3;opacity:0}
+.mist{z-index:5}
+.hint{z-index:6}
+.hero-stage .side{position:absolute;top:58%;z-index:6;text-decoration:none;text-align:center;
+  font:700 clamp(22px,2.6vw,40px)/1.15 "Cinzel","Cormorant Garamond",serif;letter-spacing:.14em;text-transform:uppercase;
+  background-image:linear-gradient(110deg,transparent 42%,rgba(255,244,205,.95) 50%,transparent 58%),linear-gradient(180deg,#f3d683 0%,#d4b056 45%,#b48a34 78%,#8f6b24 100%);
+  background-size:320% 100%,100% 100%;background-position:100% 0,0 0;background-repeat:no-repeat;
+  -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 2px 10px rgba(0,0,0,.85));animation:ggf-shimmer 8s ease-in-out infinite;transition:filter .3s ease,transform .3s ease}
+.hero-stage .side::after{content:"";display:block;width:56px;height:1px;margin:14px auto 0;background:rgba(232,185,35,.7);transition:width .3s ease}
+.hero-stage .side:hover{filter:brightness(1.25) drop-shadow(0 0 16px rgba(245,197,24,.5));transform:translateY(-2px)}
+.hero-stage .side:hover::after{width:96px}
+.side-left{left:7%}
+.side-right{right:7%}
+
+/* ---------- 4. Olympus at sunset with the gallery ---------- */
+.olympus{position:relative;height:260vh;background:#050505}
+.olympus .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.olympus .sunset{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:50% 55%;will-change:transform}
+.olympus-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,5,5,.9) 0%,rgba(5,5,5,.15) 22%,rgba(5,5,5,.25) 60%,rgba(5,5,5,.92) 100%)}
+.olympus-inner{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:70px 24px 24px;text-align:center}
+.olympus-inner h2{margin:0}
+.olympus .gallery{margin-top:34px;max-width:1160px;width:100%}
+.olympus .gallery img{height:auto;box-shadow:0 18px 40px rgba(0,0,0,.55);border:1px solid rgba(255,220,160,.18);will-change:transform,opacity}
+
+/* ---------- phones ---------- */
+@media (max-width:860px){
+  .hero-stage .side{top:auto;bottom:22%;font-size:17px;letter-spacing:.12em}
+  .side-left{left:5%}.side-right{right:5%}
+  .hero-stage .side::after{width:36px;margin-top:10px}
+  .olympus .gallery{margin-top:22px;gap:8px}
+  .olympus-inner{padding-top:64px}
+}
+
+/* sharp close-up of the temple: positioned and sized by ascent.js */
+.ascent .detail{position:absolute;left:0;top:0;z-index:1;max-width:none;width:0;height:0;opacity:0;visibility:hidden;pointer-events:none}
+
+/* ---------- reduced motion: no zooming, everything simply visible ---------- */
+@media (prefers-reduced-motion:reduce){
+  .ascent{height:auto}
+  .ascent .stage{position:relative;height:100vh}
+  .plate,.detail,.frieze,.clouds,.mist,.hint{display:none}
+  .ascent .hero-stage.spartan{transform:none!important;clip-path:none!important;opacity:1!important}
+  .olympus{height:auto}
+  .olympus .stage{position:relative;height:auto;min-height:100vh}
+  .clouds-back,.hero-stage .side{animation:none}
+}
+
+/* Olympus uses the studio heading/gallery styles, minus the old spacing */
+.olympus.studio{padding:0;background:#050505}
+.olympus .gallery{max-width:1000px}
+.olympus .gallery img{transition:none}
+.olympus .gallery img:hover{transform:none}
+@media (max-width:860px){
+  .olympus .gallery{grid-template-columns:repeat(3,1fr);gap:7px;max-width:420px}
+  .olympus .gallery img{border-radius:8px}
+}
+
+/* ---------- Personal Training: orbit round the Spartan ---------- */
+.hero-stage .orbit{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:0;background:#000}
+.hero-stage .orbit video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% center}
+.hero-stage .orbit i{position:absolute;inset:0}
+.hero-stage .orbit .v1{background:radial-gradient(ellipse at center,transparent 35%,rgba(0,0,0,.65) 100%)}
+.hero-stage .orbit .v2{background:linear-gradient(to top,rgba(0,0,0,.8),transparent,rgba(0,0,0,.5))}
+.hero-stage .orbit.on{opacity:1}
+.hero-stage .orbit.soft{transition:opacity .35s ease}
+.hero-stage.orbiting .hero-heading,.hero-stage.orbiting .side,.hero-stage.orbiting #embers,.hero-stage.orbiting #smoke{opacity:0;transition:opacity .7s ease;pointer-events:none}
+.hero-stage .hero-heading.pt-late{z-index:6;opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s ease}
+.hero-stage.orbiting .hero-heading.pt-late.on{opacity:1;transform:none}
+/* page changes cross-fade instead of flashing (Chrome, Edge, Safari 18+) */
+@view-transition{navigation:auto}
+
+/* ---------- Location: pull back to the mountain, fall through the clouds, land on the map ---------- */
+.descent{position:relative;height:420vh;background:#050505}
+.d-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#050505}
+.d-plate{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform,opacity;background:#7fb2dd;opacity:0}
+.d-plate img{position:absolute;inset:0;width:100%;height:100%;display:block}
+.d-plate::after{opacity:0;transition:opacity .3s;content:"";position:absolute;left:0;right:0;bottom:-2px;height:38%;background:linear-gradient(180deg,rgba(238,243,248,0),rgba(238,243,248,.85) 60%,#eef3f8)}
+.d-cb{opacity:0;animation:none}
+.d-bank{position:absolute;left:0;right:0;top:0;height:200%;pointer-events:none;will-change:transform;
+  background:linear-gradient(180deg,transparent 0,transparent 36%,rgba(243,246,250,.85) 50%,#eef3f8 60%,#eef3f8 100%)}
+.d-bank .clouds-left,.d-bank .clouds-right{bottom:auto;top:18%}
+.d-fog{position:absolute;inset:0;pointer-events:none;opacity:0;
+  background:radial-gradient(ellipse at 50% 60%,#fff 0%,#f4f7fb 45%,#e3ebf4 100%)}
+.d-loc{position:absolute;inset:0;opacity:0;visibility:hidden;background:#eef3f8}
+.d-scene{position:absolute;left:0;top:0;will-change:transform}
+.d-scene img{position:absolute;inset:0;width:100%;height:100%;display:block}
+.d-scene::before{content:"";position:absolute;left:0;right:0;top:-2px;height:24%;z-index:1;background:linear-gradient(180deg,#eef3f8,rgba(238,243,248,.6) 45%,rgba(238,243,248,0))}
+.d-text{position:absolute;left:0;right:0;top:var(--loc-y,38%);transform:translateY(-50%);text-align:center;pointer-events:none}
+.d-text h2{margin:0;font:700 clamp(44px,8vw,120px)/1 "Cinzel",var(--serif);letter-spacing:.14em;text-transform:uppercase;
+  color:#f5c518;-webkit-text-fill-color:#f5c518;background:none;animation:none;filter:none;
+  text-shadow:0 2px 0 rgba(90,60,0,.55),0 6px 24px rgba(0,0,0,.45)}
+.d-addr{display:inline-block;margin:12px 0 0;padding:8px 18px;border-radius:40px;font:600 clamp(12px,1.2vw,15px)/1.35 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:#fff;
+  background:radial-gradient(ellipse at center,rgba(0,0,0,.42),rgba(0,0,0,.22) 70%,rgba(0,0,0,0) 100%);
+  text-shadow:0 1px 2px rgba(0,0,0,.85),0 0 12px rgba(0,0,0,.6)}
+.d-text h2{position:relative}
+.d-text::before{content:"";position:absolute;left:50%;top:50%;width:min(900px,92vw);height:150%;transform:translate(-50%,-50%);z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse at center,rgba(0,0,0,.30),rgba(0,0,0,.12) 55%,rgba(0,0,0,0) 72%)}
+.d-pin{position:absolute;left:0;top:0;display:flex;flex-direction:column;align-items:center;text-decoration:none;transform:translate(-50%,-100%)}
+.d-pin .d-dir{display:inline-block;background:var(--loud);color:#0a0a0a;font:800 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;
+  padding:12px 18px;border-radius:3px;box-shadow:0 10px 26px rgba(0,0,0,.45);margin-bottom:12px;white-space:nowrap;transition:transform .2s,background .2s}
+.d-pin:hover .d-dir{background:#ffd23a;transform:translateY(-2px)}
+.d-pin .pin{width:30px;height:30px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);
+  background:linear-gradient(135deg,#ffe38a,#f5c518 45%,#b48a34);box-shadow:0 0 0 7px rgba(245,197,24,.22),0 0 30px rgba(245,197,24,.75);
+  animation:pindrop 2.4s ease-in-out infinite}
+.d-pin .pin::after{content:"";position:absolute;inset:9px;border-radius:50%;background:#0a0a0a}
+@keyframes pindrop{0%,100%{translate:0 0}50%{translate:0 -6px}}
+@media (prefers-reduced-motion:reduce){
+  .descent{height:auto}.d-stage{position:relative;height:auto}
+  .d-plate,.d-cb,.d-bank,.d-fog{display:none}.d-loc{position:relative;height:100vh;opacity:1;visibility:visible}.d-pin .pin{animation:none}
+}
+.d-plate.sink::after{opacity:1}
+
+/* Spartan -> sunset: no hard line. The Spartan's ember-red darkness melts down into the top of the sunset,
+   and his dark sides carry on down a little way before opening up. */
+.ascent .hero-stage.spartan .hero-heading{z-index:6}
+.ascent .hero-stage.spartan::after{content:"";position:absolute;left:0;right:0;bottom:0;height:24%;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(18,7,5,0) 0%,rgba(18,7,5,.55) 55%,#120705 100%)}
+.olympus{margin-top:-1px}
+.olympus::before{content:"";position:absolute;left:0;right:0;top:0;height:85vh;z-index:3;pointer-events:none;
+  background:
+    linear-gradient(180deg,#120705 0%,rgba(18,7,5,.9) 16%,rgba(18,7,5,.5) 42%,rgba(18,7,5,0) 100%),
+    radial-gradient(ellipse 60% 90% at 50% 30%,rgba(140,40,12,.22),rgba(140,40,12,0) 70%),
+    linear-gradient(90deg,rgba(5,5,5,.8) 0%,rgba(5,5,5,0) 22%,rgba(5,5,5,0) 78%,rgba(5,5,5,.8) 100%);
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)}
+/* phone: his quick nod down before the orbit (a frozen frame that melts away) */
+.hero-stage canvas.nod{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;transition:opacity .28s ease-out}
+/* black dip used by the Location shortcut */
+#loc-veil{position:fixed;inset:0;z-index:999;background:#000;opacity:0;pointer-events:none;transition:opacity .35s ease}
+#loc-veil.on{opacity:1}

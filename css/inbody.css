@@ -1,0 +1,36 @@
+/* InBody test on the Nutrition page: the poster's layout and lettering, red -> yellow, dark text -> white */
+.inbody{position:relative;max-width:1100px;margin:96px auto 0;padding:0 20px;text-align:center;font-family:"Inter",var(--sans)}
+.inbody .ib-eyebrow{font:200 clamp(30px,4.2vw,56px)/1 "Inter",var(--sans);letter-spacing:.08em;text-transform:uppercase;color:#fff;margin:0}
+.nutri .inbody h2.ib-title{font:800 clamp(56px,9vw,124px)/1 "Inter",var(--sans);letter-spacing:-.02em;margin:6px auto 0;max-width:none;
+  color:var(--loud);-webkit-text-fill-color:var(--loud);background:none;filter:none;animation:none}
+.inbody .ib-sub{display:flex;align-items:center;justify-content:center;gap:18px;margin:18px auto 0;
+  font:300 clamp(14px,1.6vw,22px)/1 "Inter",var(--sans);letter-spacing:.02em;text-transform:uppercase;color:#fff}
+.inbody .ib-sub::before,.inbody .ib-sub::after{content:"";height:2px;width:min(200px,18vw);background:rgba(255,255,255,.55)}
+
+.ib-grid{display:grid;grid-template-columns:1fr minmax(220px,290px) 1fr;grid-template-rows:auto auto;margin-top:40px;align-items:center}
+.ib-stage{grid-column:2;grid-row:1/3;position:relative;z-index:2;padding:0 8px}
+.ib-machine{display:block;width:100%;height:auto;filter:drop-shadow(0 20px 34px rgba(0,0,0,.65))}
+
+.ib-card{position:relative;z-index:1;text-align:right}
+.ib-easy{grid-column:1;grid-row:1;align-self:end;margin-bottom:70px}
+.ib-precise{grid-column:1;grid-row:2;align-self:start}
+.ib-quick{grid-column:3;grid-row:1/3;text-align:left;margin-top:-40px}
+/* yellow ribbons run in behind the machine, as on the poster */
+.ib-card h3{display:block;position:relative;margin:0 -90px 16px 0;padding:12px 110px 10px 30px;text-align:center;
+  font:800 clamp(30px,3.4vw,46px)/1 "Inter",var(--sans);letter-spacing:.01em;text-transform:uppercase;color:#0a0a0a;
+  background:var(--loud);border-radius:60px 0 0 60px}
+.ib-quick h3{margin:0 0 16px -90px;padding:12px 30px 10px 110px;border-radius:0 60px 60px 0}
+.ib-card p{font:400 clamp(16px,1.55vw,20px)/1.4 "Inter",var(--sans);color:#fff;max-width:330px;margin:0 0 0 auto;padding-right:30px}
+.ib-quick p{margin:0 auto 0 0;padding:0 0 0 30px}
+
+@media (max-width:760px){
+  .inbody{margin-top:72px}
+  .ib-grid{display:flex;flex-direction:column;align-items:center;margin-top:30px}
+  .ib-stage{order:-1;width:min(56vw,220px);margin-bottom:30px}
+  .ib-card,.ib-quick{text-align:center;margin:0 0 30px;width:100%}
+  .ib-precise{order:3}
+  .ib-card h3,.ib-quick h3{display:inline-block;margin:0 0 14px;padding:10px 38px 8px;border-radius:60px}
+  .ib-card p,.ib-quick p{margin:0 auto;padding:0;max-width:420px}
+  .inbody .ib-sub{font-size:13px;gap:12px;white-space:nowrap}
+  .inbody .ib-sub::before,.inbody .ib-sub::after{width:9vw}
+}

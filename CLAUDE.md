@@ -22,11 +22,19 @@ Owner: Oliver Elia (greekgodfitness.org). Static HTML/CSS/JS, hosted on Vercel. 
 
 ## Current Spartan head behaviour
 - Desktop: head follows the mouse in every direction (unchanged – keep exactly as is).
-- Phone (`pointer: coarse`): `PHONE_TILT_ONLY = true` in `src/GGFSpartan.tsx` – he always looks down; left/right tilt picks lower-left / down / lower-right; no finger steering, no idle look-around; starts on frame 114.
+- Phone (`pointer: coarse`): `PHONE_TILT_ONLY = true` in `src/GGFSpartan.tsx` – head stays level and only turns left/right with phone tilt (`PHONE_PITCH = 0`, `PHONE_YAW = 0.85`); no finger steering, no idle look-around; starts facing ahead (frame 0). Upright phones load a lighter portrait cut of the video (`/media/spartan-scrub-phone.mp4`, ~4 MB) instead of the 14 MB 4K file.
+- `window.GGFSpartan` (from the hero) exposes `faceTo(frame)`, `jumpTo(frame)`, `frame()`, `release()` for scripted moves.
 - iOS motion permission is requested only when the visitor taps the Spartan (inside `#hero-stage`, not on a link/button). Asking on any tap made iPhones show the prompt mid-tap and swallowed menu/hero link taps (fixed 16 Nov).
 - Build with the same React the bundle uses (19.2.8): `npm install --no-save react@19.2.8 react-dom@19.2.8 esbuild@0.28`, then the esbuild command above.
 - Phone menu (`css/style.css`, max-width media block): the Services links are always shown while the menu is open. A desktop hover rule used to collapse them under the finger, so Personal Training landed on Contact and Nutrition on nothing (fixed 16 Nov). Test phone menus with a hover-then-tap, not by tapping Services first.
 - Known issue: the head still glitches somewhat when moving; Oliver wants to improve it later.
+
+## The Ascent homepage (live 18 Nov 2026, designed with Oliver in a claude.ai tester)
+- Scroll journey: mountain + temple (`scenes/mountain.webp`, sharp overlays `temple-close.webp`, `peak-close.webp`; Oliver's logo carved on the frieze) → through the temple door into darkness → Spartan + embers → sunset "Start Training Today" (`scenes/olympus.webp`) → gold free-session band → Meet the Coach → pull back to the mountain and drop straight down through the clouds → LOCATION over the Limassol seafront (`scenes/city.webp`, gold pin + Get directions). Code: `js/ascent.js`, `css/ascent.css`.
+- Personal Training click (homepage Spartan): head settles on frame 135 (looking at the link), then the Higgsfield camera-orbit clip plays (`media/spartan-orbit*.mp4`, `js/orbit.js`) and the PT page opens on its last frame (`media/spartan-back*.webp`, `css/pt-hero.css`, `js/pt-hero.js`), text scrolls up over him while he fades. On phones he nods down first, then turns to the link.
+- Menu: Meet the Coach → `/#coach`; Location → `/#location` or `/?go=location` plays the zoom-out + cloud descent automatically (`js/goto-location.js`); Contact → footer. Page changes fade through black (`js/page-fade.js`, view transitions). PT/Nutrition always open at the top (`js/start-top.js`).
+- Nutrition: InBody 270 section (`css/inbody.css`, poster layout in site colours). Footer logo, tab icon and Google logo use Oliver's transparent logo (`assets/logo-footer.webp`, `favicon-*.png`, `logo-google.png`).
+- Embers wrapper (top of `js/embers.js`) falls back to the window size while the hero is hidden; ember code itself unchanged.
 
 ## Words Oliver uses
 - **"push"** = commit and push to `main`. Vercel builds it (state READY) but greekgodfitness.org does **not** change yet. Give Oliver the build's preview URL if useful.

@@ -92,3 +92,28 @@ body{background:var(--black);color:var(--chalk)}
 }
 .coach-text .quote:hover{filter:brightness(1.22) drop-shadow(0 0 14px rgba(245, 197, 24, .42)) drop-shadow(0 0 2px rgba(255, 220, 140, .55))}
 @media (prefers-reduced-motion: reduce){ .coach-text .quote{animation:none !important;background-position:100% 0, 0 0} }
+
+/* footer logo: transparent artwork straight on the black, no box */
+.footer img.footer-logo{width:170px;height:auto;margin:0 auto 18px;border-radius:0;background:none}
+
+/* ---------- page changes: fade out to black, fade the new page in ---------- */
+@view-transition{navigation:auto}
+html{background:#050505}
+::view-transition-group(root){animation-duration:.9s}
+::view-transition-old(root){animation:pf-out .42s ease both}
+::view-transition-new(root){animation:pf-in .5s ease .38s both}
+@keyframes pf-out{to{opacity:0}}
+@keyframes pf-in{from{opacity:0}}
+html.pf body{animation:pf-in .5s ease both}
+html.pf.pf-out body{opacity:0;transition:opacity .4s ease}
+@media (prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}html.pf body{animation:none}}
+
+/* Meet the Coach as its own page */
+.coach-page{padding-top:110px}
+@media (max-width:860px){.coach-page{padding-top:76px}}
+.coach-page + .back{background:var(--black);padding-bottom:50px}
+
+/* Meet the Coach at the foot of the homepage, just before the fall back to the mountain */
+.coach-home{padding-top:96px;padding-bottom:120px;background:linear-gradient(180deg,#050505 0%,#050505 80%,#000 100%)}
+@media (max-width:760px){.coach-home{padding-top:64px;padding-bottom:80px}}
+#coach{scroll-margin-top:-70px}
