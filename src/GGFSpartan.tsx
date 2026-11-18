@@ -119,6 +119,35 @@ const STAY = 0.01; // do not move for improvements smaller than this (stops shim
 const FADE_MS = 170; // length of the soft dissolve used on a hop
 const NEUTRAL_FRAME = 0; // facing the viewer, level
 
+// Desktop (Oliver, 18 Nov): the head only moves along ONE smooth stretch of the footage –
+// up to the viewer's right -> Nutrition (right) -> lower right -> down -> lower left (Personal Training).
+// He never leaves it, so every move is a plain walk through neighbouring frames (no jumps, no glitches).
+// The cursor's direction from the middle of the screen picks the point on that stretch.
+const ARC_ONLY = true; // false = old behaviour (follows the mouse in every direction)
+const ARC_FIRST = 63; // looking up to the viewer's right
+const ARC_LAST = 141; // looking to the lower left, just past Personal Training
+const ARC_START = 114; // shown first: looking down, centre
+const ARC_DEAD = 0.12; // cursor this close to the middle of the screen: keep the current pose
+const inArc = (f: number) => f >= ARC_FIRST && f <= ARC_LAST;
+// Direction of each pose (angle of yaw/pitch), unwrapped so it falls steadily along the stretch.
+const ARC_ANGLE = new Float32Array(FRAME_COUNT);
+for (let f = ARC_FIRST; f <= ARC_LAST; f++) ARC_ANGLE[f] = Math.atan2(PITCH[f], YAW[f]);
+// Cursor directions the stretch does not cover (straight up and up-left): he holds his pose there
+// instead of sweeping round to the other end. Just past either end still counts as that end.
+const ARC_MARGIN = 0.21; // ~12 degrees
+const ARC_SPLIT = (ARC_ANGLE[ARC_FIRST] + ARC_ANGLE[ARC_LAST] + 2 * Math.PI) / 2;
+const arcFrameFor = (y: number, p: number): number => {
+  let a = Math.atan2(p, y);
+  if (a > ARC_SPLIT) a -= 2 * Math.PI;
+  if (a > ARC_ANGLE[ARC_FIRST] + ARC_MARGIN || a < ARC_ANGLE[ARC_LAST] - ARC_MARGIN) return -1; // hold
+  let best = ARC_FIRST, bestD = 1e9;
+  for (let f = ARC_FIRST; f <= ARC_LAST; f++) {
+    const d = Math.abs(ARC_ANGLE[f] - a);
+    if (d < bestD) { bestD = d; best = f; }
+  }
+  return best;
+};
+
 // Hop table as an adjacency list: HOPS[frame] = [[otherFrame, cost], ...]
 const HOPS: [number, number][][] = Array.from({ length: FRAME_COUNT }, () => []);
 for (let i = 0; i < JUMPS.length; i += 3) {
@@ -149,7 +178,7 @@ const off = new Float32Array(FRAME_COUNT);
 
 // Cheapest routes from `src` to every frame. A route is cheap when it is short and stays
 // close to the straight line from the current pose to the aimed pose.
-const planRoutes = (src: number, aimYaw: number, aimPitch: number, lastDir: number) => {
+const planRoutes = (src: number, aimYaw: number, aimPitch: number, lastDir: number, arc = false) => {
   const sy = YAW[src], sp = PITCH[src];
   for (let f = 0; f < FRAME_COUNT; f++) {
     off[f] = segDist(YAW[f], PITCH[f], sy, sp, aimYaw, aimPitch);
@@ -168,10 +197,12 @@ const planRoutes = (src: number, aimYaw: number, aimPitch: number, lastDir: numb
     done[u] = 1;
     for (const s of [1, -1]) {
       const v = mod(u + s);
+      if (arc && !inArc(v)) continue; // stay on the allowed stretch
       let w = poseGap(u, v) * (1 + OFF_LINE * off[v]);
       if (u === src && lastDir === -s) w += 0.08; // mild preference for not reversing
       if (best + w < cost[v]) { cost[v] = best + w; prev[v] = u; hopped[v] = 0; }
     }
+    if (arc) continue; // no dissolve shortcuts on the stretch: always walk
     for (const [v, c] of HOPS[u]) {
       const w = c * (1 + OFF_LINE * off[v]);
       if (best + w < cost[v]) { cost[v] = best + w; prev[v] = u; hopped[v] = 1; }
@@ -202,6 +233,9 @@ function useMouseScrubVideo(
     let arrive: (() => void) | null = null;
     const coarse = window.matchMedia("(pointer: coarse)").matches; // phone / tablet
     if (coarse && PHONE_TILT_ONLY) { targetPitch = PHONE_PITCH; shown = PHONE_START_FRAME; }
+    const arc = ARC_ONLY && !coarse; // desktop only – phones keep their tilt behaviour
+    if (arc) shown = ARC_START;
+    let arcGoal = shown;
 
     // A second layer used to dissolve over a skipped stretch of footage (see tick()).
     let canvas: HTMLCanvasElement | null = null;
@@ -278,19 +312,31 @@ function useMouseScrubVideo(
       yaw += (targetYaw - yaw) * SMOOTH;
       pitch += (targetPitch - pitch) * SMOOTH;
 
-      if (!seeking) {
+      if (!seeking && arc && forceGoal < 0 && !inArc(shown)) {
+        // Left the stretch (only after a scripted move): dissolve straight back onto it.
+        lastDir = 0;
+        startDissolve();
+        const g = arcFrameFor(yaw, pitch);
+        seek(g >= 0 ? g : ARC_START);
+      } else if (!seeking) {
         const here = shown;
-        planRoutes(here, yaw, pitch, lastDir);
+        const onArc = arc && forceGoal < 0;
+        planRoutes(here, yaw, pitch, lastDir, onArc);
         // The frame to head for: close to the aimed pose, and not too costly to reach.
         const aimCost = (f: number) => {
           const dy = YAW[f] - yaw, dp = PITCH[f] - pitch;
           return AIM_WEIGHT * (dy * dy + dp * dp);
         };
         let goal = here;
-        let goalScore = aimCost(here) - STAY;
-        for (let f = 0; f < FRAME_COUNT; f++) {
-          const s = cost[f] + aimCost(f);
-          if (s < goalScore) { goalScore = s; goal = f; }
+        if (onArc) {
+          if (Math.hypot(yaw, pitch) > ARC_DEAD) { const g = arcFrameFor(yaw, pitch); if (g >= 0) arcGoal = g; }
+          goal = arcGoal;
+        } else {
+          let goalScore = aimCost(here) - STAY;
+          for (let f = 0; f < FRAME_COUNT; f++) {
+            const s = cost[f] + aimCost(f);
+            if (s < goalScore) { goalScore = s; goal = f; }
+          }
         }
         if (forceGoal >= 0) {
           goal = forceGoal;
@@ -457,7 +503,8 @@ export default function GGFSpartan() {
     >
       <video
         ref={videoRef}
-        src={pickVideoSrc() + "#t=0.001"}
+        src={pickVideoSrc() + (ARC_ONLY && typeof window !== "undefined" && !window.matchMedia("(pointer: coarse)").matches
+          ? `#t=${((ARC_START + 0.25) / FPS).toFixed(3)}` : "#t=0.001")}
         muted
         playsInline
         preload="auto"
