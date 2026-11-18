@@ -78,6 +78,10 @@
     if (!(await ready(vid))) return go();
     vid.defaultPlaybackRate = vid.playbackRate = SPEED;
     try { await vid.play(); } catch (err) { return go(); }
+    // only switch over once the clip's first frame is really on screen - switching on "playing" alone
+    // showed the black behind the clip for a moment (fixed 18 Nov)
+    await within(new Promise(r => vid.requestVideoFrameCallback ? vid.requestVideoFrameCallback(() => r())
+      : vid.addEventListener("playing", () => requestAnimationFrame(() => r()), { once: true })), 700);
     if (!faced) wrap.classList.add("soft");                 // head did not make it to the front: blend instead
     wrap.classList.add("on");
 
@@ -90,7 +94,19 @@
         title.classList.add("on");
       }
     });
-    vid.addEventListener("ended", () => setTimeout(go, 450), { once: true });
+    // Before leaving, put the identical still picture over the clip. The browser keeps a snapshot of this
+    // page on screen while Personal Training opens, and a playing video can come out black in that
+    // snapshot - a still picture can't (that was the black flash before the PT page; fixed 18 Nov).
+    const still = async () => {
+      try {
+        await within(back.decode(), 800);
+        Object.assign(back.style, { position: "absolute", inset: "0", width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% center" });
+        back.alt = ""; vid.after(back);
+        await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+      } catch (err) {}
+      go();
+    };
+    vid.addEventListener("ended", () => setTimeout(still, 450), { once: true });
     setTimeout(go, 12000);                                  // never get stuck
   });
 
@@ -98,6 +114,6 @@
   addEventListener("pageshow", () => {
     busy = false; stage.classList.remove("orbiting");
     if (window.GGFSpartan) window.GGFSpartan.release();
-    if (wrap) { wrap.classList.remove("on", "out", "soft"); title.classList.remove("on"); try { vid.pause(); vid.currentTime = 0; } catch (e) {} }
+    if (wrap) { wrap.classList.remove("on", "out", "soft"); title.classList.remove("on"); wrap.querySelectorAll("img").forEach(i => i.remove()); try { vid.pause(); vid.currentTime = 0; } catch (e) {} }
   });
 })();
