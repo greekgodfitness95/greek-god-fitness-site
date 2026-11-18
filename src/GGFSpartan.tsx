@@ -228,6 +228,12 @@ function useMouseScrubVideo(
     const startDissolve = () => {
       if (!canvas || !ctx2d || video.readyState < 2) return;
       try {
+        // Match the snapshot to the video's own shape. A fixed 16:9 canvas squashed the portrait phone
+        // video sideways, so the Spartan flashed "fat" before fading back to normal (fixed 18 Nov).
+        const vw = video.videoWidth || 1920, vh = video.videoHeight || 1080;
+        const k = Math.min(1, 1920 / Math.max(vw, vh));
+        const cw = Math.round(vw * k), ch = Math.round(vh * k);
+        if (canvas.width !== cw || canvas.height !== ch) { canvas.width = cw; canvas.height = ch; }
         ctx2d.drawImage(video, 0, 0, canvas.width, canvas.height); // freeze the old frame on top
         canvas.style.transition = "none";
         canvas.style.opacity = "1";

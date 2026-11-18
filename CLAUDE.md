@@ -27,6 +27,7 @@ Owner: Oliver Elia (greekgodfitness.org). Static HTML/CSS/JS, hosted on Vercel. 
 - iOS motion permission is requested only when the visitor taps the Spartan (inside `#hero-stage`, not on a link/button). Asking on any tap made iPhones show the prompt mid-tap and swallowed menu/hero link taps (fixed 16 Nov).
 - Build with the same React the bundle uses (19.2.8): `npm install --no-save react@19.2.8 react-dom@19.2.8 esbuild@0.28`, then the esbuild command above.
 - Phone menu (`css/style.css`, max-width media block): the Services links are always shown while the menu is open. A desktop hover rule used to collapse them under the finger, so Personal Training landed on Contact and Nutrition on nothing (fixed 16 Nov). Test phone menus with a hover-then-tap, not by tapping Services first.
+- Dissolve snapshots (hero `startDissolve` and the phone "nod" in `js/orbit.js`) take their size from the video's own shape. They used to be fixed 16:9, which squashed the portrait phone video and made the Spartan flash "fat" when tilting (fixed 18 Nov). Never hard-code a 16:9 size for anything drawn from the phone video.
 - Known issue: the head still glitches somewhat when moving; Oliver wants to improve it later.
 
 ## The Ascent homepage (live 18 Nov 2026, designed with Oliver in a claude.ai tester)

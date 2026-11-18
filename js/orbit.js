@@ -62,8 +62,10 @@
       const snap = document.createElement("canvas");
       snap.className = "nod";
       try {
-        snap.width = 960; snap.height = 540;
-        snap.getContext("2d").drawImage(hv, 0, 0, 960, 540);
+        // same shape as the video (tall on phones) so the snapshot isn't squashed sideways
+        const vw = hv.videoWidth || 960, vh = hv.videoHeight || 540, k = Math.min(1, 960 / Math.max(vw, vh));
+        snap.width = Math.round(vw * k); snap.height = Math.round(vh * k);
+        snap.getContext("2d").drawImage(hv, 0, 0, snap.width, snap.height);
         stage.querySelector("#hero-root").after(snap);
         await within(api.jumpTo(NOD_FRAME), 1500);
         requestAnimationFrame(() => { snap.style.opacity = "0"; });
