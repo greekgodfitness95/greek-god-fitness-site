@@ -68,9 +68,10 @@ Claude is **Zeus** and hands out the work. Do each job "as" the agent whose role
 | Homeros | `homeros` | Copywriter – page wording, offers and calls to action |
 | Pythagoras | `pythagoras` | Analyst – reads visitor numbers (pages, phone vs computer, where people come from, where they drop off) and suggests what to change. Uses Vercel Web Analytics |
 | Mnemosyne | `mnemosyne` | **Goddess of Memory** (female: long dark hair, laurel wreath, purple gown, golden scroll – kind `god`, look `goddess`) – keeps the records: updates CLAUDE.md and Oliver's key-moments file (`/home/user/Claude-Code-Key-Moments.md`, sent to him to download after every important change) so nothing is lost between sessions. God (kind `god`) |
+| Nike | `nike` | **Goddess of Victory** – Reviews (added 18 Nov): keeps the Google review count on the site in sync (homepage `.chalk-band .reviews` text + aria-label, and `llms.txt` lines 3 and 12) and, later, real review quotes. She can't read Google Maps from here, so the count comes from Oliver; in the weekly check-in she asks him for the current count. God (kind `god`, look `goddess`, colour `#d97706`) |
 | Cadmus | `cadmus` | Translator – builds and maintains a Greek version of the site (locals search in Greek, e.g. "γυμναστής Λεμεσός"). Not started yet |
 
-Not added yet (suggested for later): Peitho (turns visitors into bookings), Calliope (articles/posts), Nike (reviews).
+Not added yet (suggested for later): Peitho (turns visitors into bookings), Calliope (articles/posts).
 
 New agents: Spartans by default; a bigger role can be promoted to a god (`kind: "god"`) or a new god created.
 
@@ -95,10 +96,10 @@ Goal from Oliver: top 3 on Google for Limassol personal training; the brand is p
 - Done 16 Nov 2026: keyword page titles ("… Personal Trainer in Limassol"), canonical + Open Graph tags, schema.org `HealthClub`/`LocalBusiness` JSON-LD on the homepage and `Service` on the other pages, `sitemap.xml`, `robots.txt`, hidden homepage `<h1>` mentions Limassol. Homepage title is exactly "Greek God Fitness | Personal Training in Limassol" (Oliver: no "luxury" in it).
 - Per-page SEO (16 Nov): Personal Training + Nutrition pages have keyword descriptions and an FAQ section (`css/faq.css`, facts only from existing page copy – never invent prices/hours/claims); descriptive image alt texts on all pages.
 - Keep the homepage meta description saying "Germasogeia, Cyprus" (Oliver's choice). Visible headings stay as designed.
-- Homepage free-session band: says "Come in, train with us…" (not "Oliver"), and under the Book on WhatsApp button a small gold ★★★★★ "97 five-star reviews on Google" line links to the Google Business Profile (styles in `css/pop.css`). Update the number as reviews grow.
+- Homepage free-session band: says "Come in, train with us…" (not "Oliver"), and under the Book on WhatsApp button a small gold ★★★★★ "98 five-star reviews on Google" line (count kept up to date by Nike; 98 on 18 Nov) links to the Google Business Profile (styles in `css/pop.css`). Update the number as reviews grow.
 - The coach quote ("It would be a shame to grow old…") uses the same molten-gold shine as the titles; its rules live at the end of `css/pop.css` (the approved block in `style.css` is untouched).
 - WhatsApp links in `js/config.js` pre-fill "Hi Oliver, I found Greek God Fitness on your website…" so enquiries from the site are recognisable. Andre's `dietWhatsapp` is left alone.
-- Next (needs Oliver's Google account): Google Business Profile, Google Search Console (submit the sitemap), collect Google reviews. Opening hours: Monday–Friday 07:00–18:00, closed Saturday and Sunday (Oliver, 16 Nov) – in the homepage schema. Google Business Profile (~97 five-star reviews): https://maps.app.goo.gl/j6efqRGQ95VzjWyq8 – linked in the homepage schema (`sameAs`, `hasMap`) and from the address link in the Location section.
+- Next (needs Oliver's Google account): Google Business Profile, Google Search Console (submit the sitemap), collect Google reviews. Opening hours: Monday–Friday 07:00–18:00, closed Saturday and Sunday (Oliver, 16 Nov) – in the homepage schema. Google Business Profile (98 five-star reviews on 18 Nov): https://maps.app.goo.gl/j6efqRGQ95VzjWyq8 – linked in the homepage schema (`sameAs`, `hasMap`) and from the address link in the Location section.
 
 ## AI search / GEO (Odysseus)
 Goal: get recommended by ChatGPT, Claude, Gemini, Perplexity, Grok for Limassol personal training.
