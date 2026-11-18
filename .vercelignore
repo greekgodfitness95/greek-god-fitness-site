@@ -1,1 +1,9 @@
+# Files that stay in GitHub but are never published on greekgodfitness.org
 docs/
+CLAUDE.md
+README.md
+package.json
+package-lock.json
+src/
+node_modules/
+.gitignore

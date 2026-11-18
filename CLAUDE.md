@@ -35,7 +35,7 @@ Owner: Oliver Elia (greekgodfitness.org). Static HTML/CSS/JS, hosted on Vercel. 
 - Menu: Meet the Coach → `/#coach`; Location → `/#location` or `/?go=location` plays the zoom-out + cloud descent automatically (`js/goto-location.js`); Contact → footer. Page changes fade through black (`js/page-fade.js`, view transitions). PT/Nutrition always open at the top (`js/start-top.js`).
 - Nutrition: InBody 270 section (`css/inbody.css`, poster layout in site colours). Footer logo, tab icon and Google logo use Oliver's transparent logo (`assets/logo-footer.webp`, `favicon-*.png`, `logo-google.png`).
 - Embers wrapper (top of `js/embers.js`) falls back to the window size while the hero is hidden; ember code itself unchanged.
-- **Full hand-over from the design chat** (timeline numbers, constants, asset sources, how the orbit clip was made, open items): `docs/ascent-handoff.md`. Read it before changing the homepage journey, the orbit or the Location descent. (`docs/` is excluded from the live site by `.vercelignore`.)
+- **Full hand-over from the design chat** (timeline numbers, constants, asset sources, how the orbit clip was made, open items): `docs/ascent-handoff.md`. Read it before changing the homepage journey, the orbit or the Location descent. (`.vercelignore` keeps `docs/`, `CLAUDE.md`, `README.md`, `package.json`, `src/` off the live site – checked 18 Nov after CLAUDE.md was found downloadable at greekgodfitness.org/CLAUDE.md. Anything new that is internal must be added there too.)
 
 ## Words Oliver uses
 - **"push"** = commit and push to `main`. Vercel builds it (state READY) but greekgodfitness.org does **not** change yet. Give Oliver the build's preview URL if useful.
