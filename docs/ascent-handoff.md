@@ -50,7 +50,7 @@ fading in as the descent rises under it.
 ## 2. Spartan (`src/GGFSpartan.tsx` → `js/hero.js`)
 Build exactly as in CLAUDE.md (React 19.2.8, esbuild). Changes made in the chat:
 - Phone: `PHONE_PITCH = 0`, `PHONE_YAW = 0.85`, `PHONE_START_FRAME = 0` – level head, left/right with tilt only.
-- Upright phones load `/media/spartan-scrub-phone.mp4` (portrait 648×1080 cut, all-intra like the 4K file, ~4 MB) via `pickVideoSrc()`; desktops/tablets keep the 14 MB 4K on github.io.
+- Upright phones load `/media/spartan-scrub-phone.mp4` (portrait 648×1080 cut, all-intra like the 4K file, ~4 MB) via `pickVideoSrc()`; desktops/tablets get the 14 MB 4K `/media/spartan-scrub-4k-small.mp4` (on github.io until 20 Nov).
 - `window.GGFSpartan = { faceFront, faceTo(frame), jumpTo(frame), frame(), release() }` for scripted moves.
 - Embers: only the wrapper at the top of `js/embers.js` changed (falls back to window size while the hero is hidden; ignores zero-size resizes). Ember code untouched.
 

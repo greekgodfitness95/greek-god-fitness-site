@@ -18,6 +18,6 @@ Nothing needs building to publish: Vercel serves these files as they are.
   with `npm install` and `npm run build:hero` (this rewrites `js/hero.js`).
 
 ## Hero video
-The video is loaded from GitHub Pages:
-`https://greekgodfitness95.github.io/Greek-God-Fitness-assets/spartan-scrub-4k-small.mp4`
-Keep that file online, or change `VIDEO_SRC` in `src/GGFSpartan.tsx` and rebuild.
+The video is served by this site: `media/spartan-scrub-4k-small.mp4` (desktop/tablet) and
+`media/spartan-scrub-phone.mp4` (upright phones). To swap it, replace the file or change
+`VIDEO_SRC` in `src/GGFSpartan.tsx` and rebuild.

@@ -5,8 +5,8 @@ import React, { useEffect, useRef, type RefObject } from "react";
    WITH the heading, logo and buttons drawn INSIDE it so nothing can
    hide them. Everything you may want to change is in this first block.
    ===================================================================== */
-const VIDEO_SRC =
-  "https://greekgodfitness95.github.io/Greek-God-Fitness-assets/spartan-scrub-4k-small.mp4";
+// Served from this site (moved off GitHub Pages on 20 Nov so the assets repo can be private).
+const VIDEO_SRC = "/media/spartan-scrub-4k-small.mp4";
 // Phones held upright get a portrait cut of the same footage (about 4 MB instead of 14 MB). It shows exactly
 // the part of the picture a phone screen shows anyway, so he looks the same - just loads far faster.
 const PHONE_VIDEO_SRC = "/media/spartan-scrub-phone.mp4";

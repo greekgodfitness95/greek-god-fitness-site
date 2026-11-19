@@ -16,7 +16,7 @@ Owner: Oliver Elia (greekgodfitness.org). Static HTML/CSS/JS, hosted on Vercel. 
   - `js/hero.js` – built from `src/GGFSpartan.tsx` with
     `esbuild src/hero-entry.tsx --bundle --minify --outfile=js/hero.js --define:process.env.NODE_ENV=\"production\" --jsx=automatic`
     (React 19). Always edit `src/GGFSpartan.tsx`, then rebuild – never hand-edit `hero.js` only.
-  - Video: `https://greekgodfitness95.github.io/Greek-God-Fitness-assets/spartan-scrub-4k-small.mp4` (repo `greekgodfitness95/Greek-God-Fitness-assets`), 216 frames, 24 fps.
+  - Video: `/media/spartan-scrub-4k-small.mp4` (14 MB, 216 frames, 24 fps), served by this site. Moved here 20 Nov from GitHub Pages (`greekgodfitness95.github.io/Greek-God-Fitness-assets/...`) so the assets repo could go private; nothing on the site may load from github.io any more.
   - `js/embers.js` + `body_mask.png` – four-layer interactive embers. **Approved by Oliver as perfect: do not change the ember code** (section 2 in the file). Only the small wrapper at the top fits it to the hero box.
   - The heading "UNLEASH YOUR INNER GOD" is drawn by `index.html` (`.hero-heading`) in front of the embers; keep the wording.
 
