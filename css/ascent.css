@@ -76,8 +76,8 @@ html{scroll-behavior:auto}
 
 
 .mist{position:absolute;inset:0;pointer-events:none;opacity:0;background:radial-gradient(ellipse at 50% 50%,#1a120a,#0b0907 70%)}
-.hint{position:absolute;left:50%;bottom:4.5%;transform:translateX(-50%);margin:0;font:600 11px/1 var(--sans);letter-spacing:.32em;text-transform:uppercase;color:#fff;text-shadow:0 1px 8px rgba(0,40,80,.5);display:flex;flex-direction:column;align-items:center;gap:12px;transition:opacity .4s}
-.hint span{width:1px;height:38px;background:linear-gradient(#fff,rgba(255,255,255,0));animation:hint 1.8s ease-in-out infinite}
+.hint{position:absolute;left:50%;bottom:4.5%;transform:translateX(-50%);margin:0;font:600 11px/1 var(--sans);letter-spacing:.32em;text-transform:uppercase;color:#111;text-shadow:0 0 10px rgba(255,255,255,.55);display:flex;flex-direction:column;align-items:center;gap:12px;transition:opacity .4s}
+.hint span{width:1px;height:38px;background:linear-gradient(#111,rgba(17,17,17,0));animation:hint 1.8s ease-in-out infinite}
 @keyframes hint{0%{transform:scaleY(.2);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}100%{transform:scaleY(1);opacity:0}}
 
 
